@@ -44,8 +44,14 @@ class Query
      */
     public static function unserialize(array $payload): QueryBuilder
     {
-        $builder = DB::query();
+        return static::unserializeFor(DB::query(), $payload);
+    }
 
+    /**
+     * Unserialize for basic Query Builder.
+     */
+    public static function unserializeFor(QueryBuilder $builder, array $payload): QueryBuilder
+    {
         \collect($payload)->transform(static function ($value, $type) use ($builder) {
             if ($type === 'wheres') {
                 foreach ($value as $index => $where) {

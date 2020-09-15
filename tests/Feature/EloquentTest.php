@@ -160,8 +160,10 @@ class EloquentTest extends TestCase
 
         $unserialize = Eloquent::unserialize($serialized);
 
-        $this->assertSame('select * from `users` where exists (select * from `roles` inner join `user_role` where `users`.`id` = `user_role`.`user_id` and `roles`.`id` in (?))', $unserialize->toSql());
+        $this->assertSame('select * from `users` where exists (select * from `roles` inner join `user_role` on `roles`.`id` = `user_role`.`role_id` where `users`.`id` = `user_role`.`user_id` and `roles`.`id` in (?))', $unserialize->toSql());
 
-        // $this->assertSame($builder->toSql(), $unserialize->toSql());
+        $this->assertSame($serialized, Eloquent::serialize($unserialize));
+
+        $this->assertSame($builder->toSql(), $unserialize->toSql());
     }
 }
