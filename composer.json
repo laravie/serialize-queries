@@ -1,0 +1,31 @@
+{
+    "name": "laravie/serialize-queries",
+    "description": "Serializable Laravel Query Builder",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mior Muhammad Zaki",
+            "email": "crynobone@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Laravie\\SerializesQuery\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Laravie\\SerializesQuery\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": ">=7.1",
+        "illuminate/database": "^6.0 || ^7.0 || ^8.0",
+        "illuminate/queue": "^6.0 || ^7.0 || ^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0 || ^5.0 || ^6.0"
+    },
+    "minimum-stability": "dev"
+}
