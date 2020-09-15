@@ -34,7 +34,7 @@ script:
   - if [[ $coverage = 'no' ]]; then vendor/bin/phpunit -c phpunit.xml; fi
 
 after_script:
-  - if [[ $setup = 'coveralls' ]]; then php-coveralls.phar -v; fi
+  - if [[ $setup = 'coveralls' ]]; then ./php-coveralls.phar -v; fi
 
 matrix:
   include:
