@@ -15,6 +15,7 @@ class Eloquent
         return [
             'model' => [
                 'class' => \get_class($builder->getModel()),
+                'connection' => $builder->getModel()->getConnectionName(),
                 'eager' => \collect($builder->getEagerLoads())->map(function ($callback) {
                     return \serialize(new SerializableClosure($callback));
                 })->all(),
@@ -28,8 +29,13 @@ class Eloquent
      */
     public static function unserialize(array $payload): EloquentBuilder
     {
+        $model = \tap(new $payload['model']['class'](), static function ($model) use ($payload) {
+            $model->setConnection($payload['model']['connection']);
+        });
+
+
         return (new EloquentBuilder(Query::unserialize($payload['builder'])))
-            ->setModel(new $payload['model']['class']())
+            ->setModel($model)
             ->setEagerLoads(
                 collect($payload['model']['eager'])->map(function ($callback) {
                     return unserialize($callback);

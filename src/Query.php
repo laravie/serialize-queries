@@ -3,6 +3,7 @@
 namespace Laravie\SerializesQuery;
 
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Query\JoinClause as JoinClauseBuilder;
 use Illuminate\Support\Facades\DB;
 
 class Query
@@ -12,7 +13,10 @@ class Query
      */
     public static function serialize(QueryBuilder $builder): array
     {
+        $connection = $builder->getConnection();
+
         return \array_filter([
+            'connection' => \is_string($connection) ? $connection : $connection->getName(),
             'columns' => $builder->columns,
             'bindings' => $builder->bindings,
             'distinct' => $builder->distinct,
@@ -44,7 +48,11 @@ class Query
      */
     public static function unserialize(array $payload): QueryBuilder
     {
-        return static::unserializeFor(DB::query(), $payload);
+        $connection = $payload['connection'] ?? null;
+
+        unset($payload['connection']);
+
+        return static::unserializeFor(DB::connection($connection)->query(), $payload);
     }
 
     /**
