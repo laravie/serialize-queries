@@ -15,7 +15,6 @@ env:
     - setup=stable laravel=^6.0
     - setup=stable laravel=^7.0
     - setup=stable laravel=^8.0
-    - setup=lowest laravel=^6.0
     - setup=lowest laravel=^7.0
     - setup=lowest laravel=^8.0
 
@@ -47,8 +46,6 @@ matrix:
       env: setup=stable laravel=^6.0
     - php: 7.2
       env: setup=stable laravel=^7.0
-    - php: 7.2
-      env: setup=lowest laravel=^6.0
     - php: 7.2
       env: setup=lowest laravel=^7.0
     - php: 7.2
