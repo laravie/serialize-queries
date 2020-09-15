@@ -49,7 +49,7 @@ matrix:
     - php: 7.2
       env: setup=lowest laravel=^7.0
     - php: 7.2
-      env: setup=coveralls coverage=yes laravel=^6.0
+      env: setup=coveralls coverage=yes laravel=^8.0
   allow_failures:
-    - env: setup=coveralls coverage=yes laravel=^6.0
+    - env: setup=coveralls coverage=yes laravel=^8.0
   fast_finish: true
