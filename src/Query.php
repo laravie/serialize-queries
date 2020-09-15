@@ -14,6 +14,12 @@ class Query
     {
         return \array_filter([
             'columns' => $builder->columns,
+            'bindings' => $builder->bindings,
+            'distinct' => $builder->distinct,
+            'from' => $builder->from,
+            'joins' => \collect($builder->joins)->map(static function ($join) {
+                return JoinClause::serialize($join);
+            })->all(),
             'wheres' => \collect($builder->wheres)->map(static function ($where) {
                 if (isset($where['query'])) {
                     $where['query'] = static::serialize($where['query']);
@@ -21,14 +27,15 @@ class Query
 
                 return $where;
             })->all(),
-            'bindings' => $builder->bindings,
-            'distinct' => $builder->distinct,
-            'from' => $builder->from,
-            'joins' => \collect($builder->joins)->map(static function ($join) {
-                return JoinClause::serialize($join);
-            })->all(),
             'groups' => $builder->groups,
+            'havings' => $builder->havings,
             'orders' => $builder->orders,
+            'limit' => $builder->limit,
+            'offset' => $builder->offset,
+            'unions' => $builder->unions,
+            'unionLimit' => $builder->unionLimit,
+            'unionOrders' => $builder->unionOrders,
+            'lock' => $builder->lock,
         ]);
     }
 

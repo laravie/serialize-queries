@@ -30,9 +30,9 @@ class JoinClause
             $type = $join['type'];
             $table = $join['table'];
 
-            $results[] = new JoinClauseBuilder(
+            $results[] = (new JoinClauseBuilder(
                 Query::unserialize(Arr::except($join, ['type', 'table'])), $type, $table
-            );
+            ))->newQuery();
         }
 
         return $results;
