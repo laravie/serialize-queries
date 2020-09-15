@@ -3,7 +3,6 @@
 namespace Laravie\SerializesQuery;
 
 use Illuminate\Database\Query\Builder as QueryBuilder;
-use Illuminate\Database\Query\JoinClause as JoinClauseBuilder;
 use Illuminate\Support\Facades\DB;
 
 class Query

@@ -144,7 +144,6 @@ class EloquentTest extends TestCase
         $this->assertSame($builder->toSql(), $unserialize->toSql());
     }
 
-
     /** @test */
     public function it_can_serialize_a_basic_eloquent_builder_with_belongs_to_many_join()
     {
@@ -185,7 +184,7 @@ class EloquentTest extends TestCase
                                     ],
                                     'type' => 'inner',
                                     'table' => 'user_role',
-                                ]
+                                ],
                             ],
                             'wheres' => [
                                 ['type' => 'Column', 'first' => 'users.id', 'operator' => '=', 'second' => 'user_role.user_id', 'boolean' => 'and'],
