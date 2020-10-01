@@ -39,7 +39,6 @@ class JoinClause
             $results[] = $joinClauseBuilder;
         }
 
-
         return $results;
     }
 }

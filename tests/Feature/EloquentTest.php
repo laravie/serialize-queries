@@ -20,6 +20,7 @@ class EloquentTest extends TestCase
                 'class' => User::class,
                 'connection' => null,
                 'eager' => [],
+                'deletedScoped' => [],
             ],
             'builder' => [
                 'connection' => 'testing',
@@ -48,6 +49,7 @@ class EloquentTest extends TestCase
                 'class' => User::class,
                 'connection' => 'mysql',
                 'eager' => [],
+                'deletedScoped' => [],
             ],
             'builder' => [
                 'connection' => 'mysql',
@@ -77,6 +79,7 @@ class EloquentTest extends TestCase
                 'class' => User::class,
                 'connection' => null,
                 'eager' => [],
+                'deletedScoped' => [],
             ],
             'builder' => [
                 'connection' => 'testing',
@@ -111,6 +114,7 @@ class EloquentTest extends TestCase
                 'class' => Post::class,
                 'connection' => null,
                 'eager' => [],
+                'deletedScoped' => [],
             ],
             'builder' => [
                 'connection' => 'testing',
@@ -158,6 +162,7 @@ class EloquentTest extends TestCase
                 'class' => User::class,
                 'connection' => null,
                 'eager' => [],
+                'deletedScoped' => [],
             ],
             'builder' => [
                 'connection' => 'testing',

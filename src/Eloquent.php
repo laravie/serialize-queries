@@ -19,6 +19,7 @@ class Eloquent
                 'eager' => \collect($builder->getEagerLoads())->map(function ($callback) {
                     return \serialize(new SerializableClosure($callback));
                 })->all(),
+                'deletedScoped' => $builder->removedScopes(),
             ],
             'builder' => Query::serialize($builder->getQuery()),
         ];
@@ -33,12 +34,11 @@ class Eloquent
             $model->setConnection($payload['model']['connection']);
         });
 
-
         return (new EloquentBuilder(Query::unserialize($payload['builder'])))
             ->setModel($model)
             ->setEagerLoads(
-                collect($payload['model']['eager'])->map(function ($callback) {
-                    return unserialize($callback);
+                \collect($payload['model']['eager'])->map(function ($callback) {
+                    return \unserialize($callback);
                 })->all()
             );
     }
