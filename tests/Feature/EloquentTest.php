@@ -2,6 +2,7 @@
 
 namespace Laravie\SerializesQuery\Tests\Feature;
 
+use Illuminate\Foundation\Application;
 use Laravie\SerializesQuery\Eloquent;
 use Laravie\SerializesQuery\Tests\Models\Post;
 use Laravie\SerializesQuery\Tests\Models\User;
@@ -24,9 +25,7 @@ class EloquentTest extends TestCase
             ],
             'builder' => [
                 'connection' => 'testing',
-                'bindings' => [
-                    'select' => [], 'from' => [], 'join' => [], 'where' => [], 'groupBy' => [], 'having' => [], 'order' => [], 'union' => [], 'unionOrder' => [],
-                ],
+                'bindings' => $this->defaultBindings(),
                 'from' => 'users',
             ],
         ], $serialized);
@@ -53,9 +52,7 @@ class EloquentTest extends TestCase
             ],
             'builder' => [
                 'connection' => 'mysql',
-                'bindings' => [
-                    'select' => [], 'from' => [], 'join' => [], 'where' => [], 'groupBy' => [], 'having' => [], 'order' => [], 'union' => [], 'unionOrder' => [],
-                ],
+                'bindings' => $this->defaultBindings(),
                 'from' => 'users',
             ],
         ], $serialized);
@@ -83,9 +80,7 @@ class EloquentTest extends TestCase
             ],
             'builder' => [
                 'connection' => 'testing',
-                'bindings' => [
-                    'select' => [], 'from' => [], 'join' => [], 'where' => ['crynobone@gmail.com'], 'groupBy' => [], 'having' => [], 'order' => [], 'union' => [], 'unionOrder' => [],
-                ],
+                'bindings' => $this->defaultBindings(['where' => ['crynobone@gmail.com']]),
                 'from' => 'users',
                 'wheres' => [
                     ['type' => 'Basic', 'column' => 'email', 'operator' => '=', 'value' => 'crynobone@gmail.com', 'boolean' => 'and'],
@@ -118,9 +113,7 @@ class EloquentTest extends TestCase
             ],
             'builder' => [
                 'connection' => 'testing',
-                'bindings' => [
-                    'select' => [], 'from' => [], 'join' => [], 'where' => ['crynobone@gmail.com'], 'groupBy' => [], 'having' => [], 'order' => [], 'union' => [], 'unionOrder' => [],
-                ],
+                'bindings' => $this->defaultBindings(['where' => ['crynobone@gmail.com']]),
                 'from' => 'posts',
                 'wheres' => [
                     [
@@ -128,7 +121,7 @@ class EloquentTest extends TestCase
                         'query' => [
                             'connection' => 'testing',
                             'columns' => ['*'],
-                            'bindings' => ['select' => [], 'from' => [], 'join' => [], 'where' => ['crynobone@gmail.com'], 'groupBy' => [], 'having' => [], 'order' => [], 'union' => [], 'unionOrder' => []],
+                            'bindings' => $this->defaultBindings(['where' => ['crynobone@gmail.com']]),
                             'from' => 'users',
                             'wheres' => [
                                 ['type' => 'Column', 'first' => 'posts.user_id', 'operator' => '=', 'second' => 'users.id', 'boolean' => 'and'],
@@ -166,9 +159,7 @@ class EloquentTest extends TestCase
             ],
             'builder' => [
                 'connection' => 'testing',
-                'bindings' => [
-                    'select' => [], 'from' => [], 'join' => [], 'where' => [1], 'groupBy' => [], 'having' => [], 'order' => [], 'union' => [], 'unionOrder' => [],
-                ],
+                'bindings' => $this->defaultBindings(['where' => [1]]),
                 'from' => 'users',
                 'wheres' => [
                     [
@@ -176,14 +167,12 @@ class EloquentTest extends TestCase
                         'query' => [
                             'connection' => 'testing',
                             'columns' => ['*'],
-                            'bindings' => ['select' => [], 'from' => [], 'join' => [], 'where' => [1], 'groupBy' => [], 'having' => [], 'order' => [], 'union' => [], 'unionOrder' => []],
+                            'bindings' => $this->defaultBindings(['where' => [1]]),
                             'from' => 'roles',
                             'joins' => [
                                 [
                                     'connection' => 'testing',
-                                    'bindings' => [
-                                        'select' => [], 'from' => [], 'join' => [], 'where' => [], 'groupBy' => [], 'having' => [], 'order' => [], 'union' => [], 'unionOrder' => [],
-                                    ],
+                                    'bindings' => $this->defaultBindings(),
                                     'wheres' => [
                                         ['type' => 'Column', 'first' => 'roles.id', 'operator' => '=', 'second' => 'user_role.role_id', 'boolean' => 'and'],
                                     ],
@@ -209,5 +198,30 @@ class EloquentTest extends TestCase
         $this->assertSame($serialized, Eloquent::serialize($unserialize));
 
         $this->assertSame($builder->toSql(), $unserialize->toSql());
+    }
+
+    /**
+     * Get default bindings.
+     */
+    protected function defaultBindings(array $override = []): array
+    {
+        if (version_compare(Application::VERSION, '6.0.0', '>=')) {
+            $bindings = [
+                'select' => [], 'from' => [], 'join' => [], 'where' => [],
+                'groupBy' => [], 'having' => [], 'order' => [],
+                'union' => [], 'unionOrder' => [],
+            ];
+        } else {
+            $bindings = [
+                'select' => [], 'from' => [], 'join' => [], 'where' => [],
+                'having' => [], 'order' => [], 'union' => [],
+            ];
+        }
+
+        foreach ($override as $key => $value) {
+            $bindings[$key] = $value;
+        }
+
+        return $bindings;
     }
 }
