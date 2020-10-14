@@ -2,11 +2,13 @@
 
 namespace Laravie\SerializesQuery\Tests\Feature;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Application;
 use Laravie\SerializesQuery\Eloquent;
 use Laravie\SerializesQuery\Tests\Models\Post;
 use Laravie\SerializesQuery\Tests\Models\User;
 use Laravie\SerializesQuery\Tests\TestCase;
+use Mockery as m;
 
 class EloquentTest extends TestCase
 {
@@ -31,6 +33,30 @@ class EloquentTest extends TestCase
         ], $serialized);
 
         $unserialize = Eloquent::unserialize($serialized);
+
+        $this->assertSame('select * from "users"', $unserialize->toSql());
+
+        $this->assertSame($builder->toSql(), $unserialize->toSql());
+    }
+
+    /** @test */
+    public function it_can_serialize_a_basic_eloquent_with_eager_relations()
+    {
+        $builder = User::with(['posts' => function ($query) {
+            return $query->where('id', '>', 10);
+        }]);
+
+        $serialized = Eloquent::serialize($builder);
+
+        $this->assertNotNull($serialized['model']['eager']['posts']);
+
+        $unserialize = Eloquent::unserialize($serialized);
+
+        $query = m::mock(Builder::class);
+
+        $query->shouldReceive('where')->with('id', '>', 10)->andReturnSelf();
+
+        $unserialize->getEagerLoads()['posts']($query);
 
         $this->assertSame('select * from "users"', $unserialize->toSql());
 
