@@ -38,7 +38,7 @@ class Eloquent
             ->setModel($model)
             ->setEagerLoads(
                 \collect($payload['model']['eager'])->map(function ($callback) {
-                    return \unserialize($callback);
+                    return \unserialize($callback)->getClosure();
                 })->all()
             );
     }
