@@ -32,21 +32,19 @@ class Eloquent
      */
     public static function unserialize(array $payload): EloquentBuilder
     {
-        $modelName = $payload['model']['class'];
-
-        $model = \tap(new $modelName(), static function ($model) use ($payload) {
+        $model = \tap(new $payload['model']['class'](), static function ($model) use ($payload) {
             $model->setConnection($payload['model']['connection']);
         });
 
-        $builder = (new EloquentBuilder(Query::unserialize($payload['builder'])))
-            ->setModel($model);
+        $builder = (new EloquentBuilder(
+            Query::unserialize($payload['builder'])
+        ))->setModel($model);
 
         return $model->registerGlobalScopes($builder)
             ->setEagerLoads(
                 \collect($payload['model']['eager'])->map(function ($callback) {
                     return \unserialize($callback)->getClosure();
                 })->all()
-            )
-            ->withoutGlobalScopes($payload['model']['removedScopes']);
+            )->withoutGlobalScopes($payload['model']['removedScopes']);
     }
 }

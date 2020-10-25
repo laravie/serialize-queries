@@ -9,6 +9,14 @@ class Comment extends Model
 {
     protected $table = 'comments';
 
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::booted();
+    }
+
     public static function booted()
     {
         static::addGlobalScope('id', function (Builder $builder) {
