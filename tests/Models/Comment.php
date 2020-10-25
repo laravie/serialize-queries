@@ -9,7 +9,6 @@ class Comment extends Model
 {
     protected $table = 'comments';
 
-
     public static function boot()
     {
         parent::boot();
