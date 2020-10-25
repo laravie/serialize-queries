@@ -5,6 +5,7 @@ namespace Laravie\SerializesQuery\Tests\Feature;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Application;
 use Laravie\SerializesQuery\Eloquent;
+use Laravie\SerializesQuery\Tests\Models\Comment;
 use Laravie\SerializesQuery\Tests\Models\Post;
 use Laravie\SerializesQuery\Tests\Models\User;
 use Laravie\SerializesQuery\Tests\TestCase;
@@ -23,7 +24,8 @@ class EloquentTest extends TestCase
                 'class' => User::class,
                 'connection' => null,
                 'eager' => [],
-                'deletedScoped' => [],
+                'globalScopes' => [],
+                'removedScopes' => [],
             ],
             'builder' => [
                 'connection' => 'testing',
@@ -36,6 +38,25 @@ class EloquentTest extends TestCase
 
         $this->assertSame('select * from "users"', $unserialize->toSql());
 
+        $this->assertSame($builder->toSql(), $unserialize->toSql());
+    }
+
+    /** @test */
+    public function it_can_serialize_a_basic_eloquent_builder_with_global_scopes()
+    {
+        $builder = Comment::query();
+        $serialized = Eloquent::serialize($builder);
+
+        $this->assertSame([
+            'connection' => 'testing',
+            'bindings' => $this->defaultBindings(),
+            'from' => 'comments',
+        ], $serialized['builder']);
+        $this->assertSame(Comment::class, $serialized['model']['class']);
+
+        $unserialize = Eloquent::unserialize($serialized);
+
+        $this->assertSame('select * from "comments" where "id" < ?', $unserialize->toSql());
         $this->assertSame($builder->toSql(), $unserialize->toSql());
     }
 
@@ -74,7 +95,8 @@ class EloquentTest extends TestCase
                 'class' => User::class,
                 'connection' => 'mysql',
                 'eager' => [],
-                'deletedScoped' => [],
+                'globalScopes' => [],
+                'removedScopes' => [],
             ],
             'builder' => [
                 'connection' => 'mysql',
@@ -102,7 +124,8 @@ class EloquentTest extends TestCase
                 'class' => User::class,
                 'connection' => null,
                 'eager' => [],
-                'deletedScoped' => [],
+                'globalScopes' => [],
+                'removedScopes' => [],
             ],
             'builder' => [
                 'connection' => 'testing',
@@ -135,7 +158,8 @@ class EloquentTest extends TestCase
                 'class' => Post::class,
                 'connection' => null,
                 'eager' => [],
-                'deletedScoped' => [],
+                'globalScopes' => [],
+                'removedScopes' => [],
             ],
             'builder' => [
                 'connection' => 'testing',
@@ -181,7 +205,8 @@ class EloquentTest extends TestCase
                 'class' => User::class,
                 'connection' => null,
                 'eager' => [],
-                'deletedScoped' => [],
+                'globalScopes' => [],
+                'removedScopes' => [],
             ],
             'builder' => [
                 'connection' => 'testing',

@@ -12,14 +12,19 @@ class Eloquent
      */
     public static function serialize(EloquentBuilder $builder): array
     {
+        $model = $builder->getModel();
+
         return [
             'model' => [
-                'class' => \get_class($builder->getModel()),
-                'connection' => $builder->getModel()->getConnectionName(),
+                'class' => \get_class($model),
+                'connection' => $model->getConnectionName(),
                 'eager' => \collect($builder->getEagerLoads())->map(function ($callback) {
                     return \serialize(new SerializableClosure($callback));
                 })->all(),
-                'deletedScoped' => $builder->removedScopes(),
+                'globalScopes' => \collect($model->getGlobalScopes())->map(function ($callback) {
+                    return \serialize(new SerializableClosure($callback));
+                })->all(),
+                'removedScopes' => $builder->removedScopes(),
             ],
             'builder' => Query::serialize($builder->getQuery()),
         ];
@@ -30,16 +35,25 @@ class Eloquent
      */
     public static function unserialize(array $payload): EloquentBuilder
     {
-        $model = \tap(new $payload['model']['class'](), static function ($model) use ($payload) {
+        $modelName = $payload['model']['class'];
+
+        $model = \tap(new $modelName(), static function ($model) use ($payload) {
             $model->setConnection($payload['model']['connection']);
         });
 
-        return (new EloquentBuilder(Query::unserialize($payload['builder'])))
+        $builder = (new EloquentBuilder(Query::unserialize($payload['builder'])))
             ->setModel($model)
+            ->withoutGlobalScopes($payload['model']['removedScopes'])
             ->setEagerLoads(
                 \collect($payload['model']['eager'])->map(function ($callback) {
                     return \unserialize($callback)->getClosure();
                 })->all()
             );
+
+        \collect($payload['model']['globalScopes'])->map(function ($callback, $name) use ($builder) {
+            $builder->withGlobalScope($name, \unserialize($callback)->getClosure());
+        });
+
+        return $builder;
     }
 }
