@@ -21,9 +21,6 @@ class Eloquent
                 'eager' => \collect($builder->getEagerLoads())->map(function ($callback) {
                     return \serialize(new SerializableClosure($callback));
                 })->all(),
-                'globalScopes' => \collect($model->getGlobalScopes())->map(function ($callback) {
-                    return \serialize(new SerializableClosure($callback));
-                })->all(),
                 'removedScopes' => $builder->removedScopes(),
             ],
             'builder' => Query::serialize($builder->getQuery()),
@@ -42,18 +39,14 @@ class Eloquent
         });
 
         $builder = (new EloquentBuilder(Query::unserialize($payload['builder'])))
-            ->setModel($model)
-            ->withoutGlobalScopes($payload['model']['removedScopes'])
+            ->setModel($model);
+
+        return $model->registerGlobalScopes($builder)
             ->setEagerLoads(
                 \collect($payload['model']['eager'])->map(function ($callback) {
                     return \unserialize($callback)->getClosure();
                 })->all()
-            );
-
-        \collect($payload['model']['globalScopes'])->map(function ($callback, $name) use ($builder) {
-            $builder->withGlobalScope($name, \unserialize($callback)->getClosure());
-        });
-
-        return $builder;
+            )
+            ->withoutGlobalScopes($payload['model']['removedScopes']);
     }
 }

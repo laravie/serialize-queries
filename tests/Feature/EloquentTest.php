@@ -24,7 +24,6 @@ class EloquentTest extends TestCase
                 'class' => User::class,
                 'connection' => null,
                 'eager' => [],
-                'globalScopes' => [],
                 'removedScopes' => [],
             ],
             'builder' => [
@@ -95,7 +94,6 @@ class EloquentTest extends TestCase
                 'class' => User::class,
                 'connection' => 'mysql',
                 'eager' => [],
-                'globalScopes' => [],
                 'removedScopes' => [],
             ],
             'builder' => [
@@ -124,7 +122,6 @@ class EloquentTest extends TestCase
                 'class' => User::class,
                 'connection' => null,
                 'eager' => [],
-                'globalScopes' => [],
                 'removedScopes' => [],
             ],
             'builder' => [
@@ -158,7 +155,6 @@ class EloquentTest extends TestCase
                 'class' => Post::class,
                 'connection' => null,
                 'eager' => [],
-                'globalScopes' => [],
                 'removedScopes' => [],
             ],
             'builder' => [
@@ -205,7 +201,6 @@ class EloquentTest extends TestCase
                 'class' => User::class,
                 'connection' => null,
                 'eager' => [],
-                'globalScopes' => [],
                 'removedScopes' => [],
             ],
             'builder' => [
