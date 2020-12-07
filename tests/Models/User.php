@@ -8,12 +8,9 @@ class User extends Model
 {
     protected $table = 'users';
 
-    /**
-     * Has many to relationship with Post.
-     */
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class, 'user_id', 'id');
     }
 
     /**

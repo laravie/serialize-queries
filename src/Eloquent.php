@@ -10,7 +10,7 @@ class Eloquent
     /**
      * Serialize from Eloquent Query Builder.
      */
-    public static function serialize(EloquentBuilder $builder): array
+    public static function serialize($builder)
     {
         $model = $builder->getModel();
 
@@ -30,8 +30,10 @@ class Eloquent
     /**
      * Unserialize to Eloquent Query Builder.
      */
-    public static function unserialize(array $payload): EloquentBuilder
+    public static function unserialize($payload)
     {
+        $payload = is_string($payload) ? \unserialize($payload) : $payload;
+
         $model = \tap(new $payload['model']['class'](), static function ($model) use ($payload) {
             $model->setConnection($payload['model']['connection']);
         });

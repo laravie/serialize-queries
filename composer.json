@@ -32,6 +32,11 @@
         "sort-packages": true
     },
     "extra": {
+        "laravel": {
+            "providers": [
+                "Laravie\\SerializesQuery\\SerializesQueryProvider"
+            ]
+        },
         "branch-alias": {
             "dev-master": "1.x-dev"
         }
