@@ -21,6 +21,7 @@ class Eloquent
                 'eager' => \collect($builder->getEagerLoads())->map(function ($callback) {
                     return \serialize(new SerializableClosure($callback));
                 })->all(),
+                'hasGlobalScopes' => !empty($builder->globalScopes()),
                 'removedScopes' => $builder->removedScopes(),
             ],
             'builder' => Query::serialize($builder->getQuery()),
@@ -30,7 +31,7 @@ class Eloquent
     /**
      * Unserialize to Eloquent Query Builder.
      */
-    public static function unserialize($payload)
+    public static function unserialize($payload): EloquentBuilder
     {
         $payload = is_string($payload) ? \unserialize($payload) : $payload;
 
@@ -42,8 +43,11 @@ class Eloquent
             Query::unserialize($payload['builder'])
         ))->setModel($model);
 
-        return $model->registerGlobalScopes($builder)
-            ->setEagerLoads(
+        if ($payload['model']['hasGlobalScopes']) {
+            $builder = $model->registerGlobalScopes($builder);
+        }
+
+        return $builder->setEagerLoads(
                 \collect($payload['model']['eager'])->map(function ($callback) {
                     return \unserialize($callback)->getClosure();
                 })->all()

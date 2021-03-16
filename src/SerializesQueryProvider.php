@@ -35,6 +35,11 @@ class SerializesQueryProvider extends ServiceProvider
             return Eloquent::serialize($this);
         });
 
+        // Added for detection of the global scopes being present or not
+        EloquentBuilder::macro('globalScopes', function () {
+            return $this->scopes;
+        });
+
         QueryBuilder::macro('serialize', function () {
             return Query::serialize($this);
         });
