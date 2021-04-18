@@ -9,24 +9,32 @@ on:
 jobs:
   tests:
     runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
-      fail-fast: false
       matrix:
-        php: [7.4, 7.3]
-        laravel: [6.x, 7.x, 8.x]
-        os: [ubuntu-latest, windows-latest]
+        os:
+          - "ubuntu-latest"
+          - "windows-latest"
+        php:
+          - "7.3"
+          - "7.4"
+          - "8.0"
+        laravel:
+          - "6.x"
+          - "7.x"
+          - "8.x"
+        dependencies:
+          - "locked"
+          - "highest"
+          - "lowest"
+        experimental:
+          - false
 
-    name: PHP${{ matrix.php }} with Laravel ${{ matrix.laravel }} on ${{ matrix.os }}
+    name: PHP${{ matrix.php }}-${{ matrix.os }} with Laravel ${{ matrix.laravel }} (${{ matrix.dependencies }})
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v1
-
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        with:
-          path: ~/.composer/cache/files
-          key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -35,33 +43,44 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip, pcntl, sqlite3, pdo_sqlite, pdo_mysql, bcmath, intl, gd, exif, iconv, imagick
           coverage: none
 
-      - name: Install dependencies
+      - name: Install Laravel ${{ matrix.laravel }}
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
-          composer update --prefer-dist --no-interaction --no-suggest
+
+      - name: Install dependencies
+        uses: "ramsey/composer-install@v1"
+        with:
+          dependency-versions: "${{ matrix.dependencies }}"
+          composer-options: "--prefer-dist --no-cache"
+
       - name: Execute tests
         run: vendor/bin/phpunit
 
   test-on-legacy-php:
     runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
-      fail-fast: false
       matrix:
-        php: [7.2]
-        laravel: [6.x, 7.x]
-        os: [ubuntu-latest, windows-latest]
+        os:
+          - "ubuntu-latest"
+          - "windows-latest"
+        php:
+          - "7.2"
+        laravel:
+          - "6.x"
+          - "7.x"
+        dependencies:
+          - "locked"
+          - "highest"
+          - "lowest"
+        experimental:
+          - false
 
-    name: PHP${{ matrix.php }} with Laravel ${{ matrix.laravel }} on ${{ matrix.os }}
+    name: PHP${{ matrix.php }}-${{ matrix.os }} with Laravel ${{ matrix.laravel }} (${{ matrix.dependencies }})
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v1
-
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        with:
-          path: ~/.composer/cache/files
-          key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -70,34 +89,43 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip, pcntl, sqlite3, pdo_sqlite, pdo_mysql, bcmath, intl, gd, exif, iconv, imagick
           coverage: none
 
-      - name: Install dependencies
+      - name: Install Laravel ${{ matrix.laravel }}
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
-          composer update --prefer-dist --no-interaction --no-suggest
+
+      - name: Install dependencies
+        uses: "ramsey/composer-install@v1"
+        with:
+          dependency-versions: "${{ matrix.dependencies }}"
+          composer-options: "--prefer-dist --no-cache"
+
       - name: Execute tests
         run: vendor/bin/phpunit
 
-
   test-on-deprecated-php:
     runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
-      fail-fast: false
       matrix:
-        php: [7.1]
-        laravel: [5.8.x]
-        os: [ubuntu-latest, windows-latest]
+        os:
+          - "ubuntu-latest"
+          - "windows-latest"
+        php:
+          - "7.1"
+        laravel:
+          - "5.8.x"
+        dependencies:
+          - "locked"
+          - "highest"
+          - "lowest"
+        experimental:
+          - false
 
-    name: PHP${{ matrix.php }} with Laravel ${{ matrix.laravel }} on ${{ matrix.os }}
+    name: PHP${{ matrix.php }}-${{ matrix.os }} with Laravel ${{ matrix.laravel }} (${{ matrix.dependencies }})
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v1
-
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        with:
-          path: ~/.composer/cache/files
-          key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -106,9 +134,15 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip, pcntl, sqlite3, pdo_sqlite, pdo_mysql, bcmath, intl, gd, exif, iconv, imagick
           coverage: none
 
-      - name: Install dependencies
+      - name: Install Laravel ${{ matrix.laravel }}
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
-          composer update --prefer-dist --no-interaction --no-suggest
+
+      - name: Install dependencies
+        uses: "ramsey/composer-install@v1"
+        with:
+          dependency-versions: "${{ matrix.dependencies }}"
+          composer-options: "--prefer-dist --no-cache"
+
       - name: Execute tests
         run: vendor/bin/phpunit
