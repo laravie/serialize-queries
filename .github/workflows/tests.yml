@@ -20,8 +20,6 @@ jobs:
           - "7.4"
           - "8.0"
         laravel:
-          - "6.x"
-          - "7.x"
           - "8.x"
         dependencies:
           - "locked"
@@ -56,7 +54,7 @@ jobs:
       - name: Execute tests
         run: vendor/bin/phpunit
 
-  test-on-legacy-php:
+  tests-on-old-laravel:
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
     strategy:
@@ -66,6 +64,9 @@ jobs:
           - "windows-latest"
         php:
           - "7.2"
+          - "7.3"
+          - "7.4"
+          - "8.0"
         laravel:
           - "6.x"
           - "7.x"
@@ -74,7 +75,7 @@ jobs:
           - "highest"
           - "lowest"
         experimental:
-          - false
+          - true
 
     name: PHP${{ matrix.php }}-${{ matrix.os }} with Laravel ${{ matrix.laravel }} (${{ matrix.dependencies }})
 
@@ -119,7 +120,7 @@ jobs:
           - "highest"
           - "lowest"
         experimental:
-          - false
+          - true
 
     name: PHP${{ matrix.php }}-${{ matrix.os }} with Laravel ${{ matrix.laravel }} (${{ matrix.dependencies }})
 
