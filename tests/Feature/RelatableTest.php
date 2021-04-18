@@ -17,9 +17,6 @@ class RelatableTest extends TestCase
         ])->posts();
         $serialized = Relatable::serialize($builder);
 
-        ray($serialized);
-
-
         $this->assertSame([
             'model' => [
                 'class' => Post::class,
