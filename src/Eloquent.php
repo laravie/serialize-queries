@@ -3,6 +3,7 @@
 namespace Laravie\SerializesQuery;
 
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Queue\SerializableClosure;
 
 class Eloquent
@@ -10,8 +11,12 @@ class Eloquent
     /**
      * Serialize from Eloquent Query Builder.
      */
-    public static function serialize(EloquentBuilder $builder): array
+    public static function serialize($builder): array
     {
+        if ($builder instanceof Relation) {
+            $builder = $builder->getQuery();
+        }
+
         $model = $builder->getModel();
 
         return [

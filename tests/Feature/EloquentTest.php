@@ -245,4 +245,50 @@ class EloquentTest extends TestCase
 
         $this->assertSame($builder->toSql(), $unserialize->toSql());
     }
+
+    /** @test */
+    public function it_can_serialize_a_related_eloquent_builder()
+    {
+        $builder = (new User())->forceFill([
+            'id' => 5,
+        ])->posts();
+
+        $serialized = Eloquent::serialize($builder);
+
+        $this->assertSame([
+            'model' => [
+                'class' => Post::class,
+                'connection' => null,
+                'eager' => [],
+                'removedScopes' => [],
+            ],
+            'builder' => [
+                'connection' => 'testing',
+                'bindings' => $this->defaultBindings([
+                    'where' => [5],
+                ]),
+                'from' => 'posts',
+                'wheres' => [
+                    [
+                        'type' => 'Basic',
+                        'column' => 'posts.user_id',
+                        'operator' => '=',
+                        'value' => 5,
+                        'boolean' => 'and',
+                    ],
+                    [
+                        'type' => 'NotNull',
+                        'column' => 'posts.user_id',
+                        'boolean' => 'and',
+                    ]
+                ],
+            ],
+        ], $serialized);
+
+        $unserialize = Eloquent::unserialize($serialized);
+
+        $this->assertSame('select * from "posts" where "posts"."user_id" = ? and "posts"."user_id" is not null', $unserialize->toSql());
+
+        $this->assertSame($builder->toSql(), $unserialize->toSql());
+    }
 }
