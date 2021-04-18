@@ -14,7 +14,9 @@ Serialize Queries allows developer to serialize Query/Eloquent Builder to be use
 
 To install through composer, run the following command from terminal:
 
-    composer require "laravie/serialize-queries"
+```bash
+composer require "laravie/serialize-queries"
+```
 
 ## Usages
 
