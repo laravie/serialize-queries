@@ -2,7 +2,7 @@
 
 namespace Laravie\SerializesQuery;
 
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Eloquent\Builder as EloquentQueryBuilder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Queue\SerializableClosure;
 
@@ -35,13 +35,13 @@ class Eloquent
     /**
      * Unserialize to Eloquent Query Builder.
      */
-    public static function unserialize(array $payload): EloquentBuilder
+    public static function unserialize(array $payload): EloquentQueryBuilder
     {
         $model = \tap(new $payload['model']['class'](), static function ($model) use ($payload) {
             $model->setConnection($payload['model']['connection']);
         });
 
-        $builder = (new EloquentBuilder(
+        $builder = (new EloquentQueryBuilder(
             Query::unserialize($payload['builder'])
         ))->setModel($model);
 

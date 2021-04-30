@@ -2,7 +2,7 @@
 
 namespace Laravie\SerializesQuery;
 
-use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Query\Builder as FluentQueryBuilder;
 use Illuminate\Database\Query\JoinClause as JoinClauseBuilder;
 use Illuminate\Support\Arr;
 
@@ -22,7 +22,7 @@ class JoinClause
     /**
      * Unserialize to Join Clause Query Builder.
      */
-    public static function unserialize(QueryBuilder $builder, array $joins): array
+    public static function unserialize(FluentQueryBuilder $builder, array $joins): array
     {
         $results = [];
 

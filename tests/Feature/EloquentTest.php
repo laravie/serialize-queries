@@ -4,12 +4,13 @@ namespace Laravie\SerializesQuery\Tests\Feature;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Application;
-use Laravie\SerializesQuery\Eloquent;
 use Laravie\SerializesQuery\Tests\Models\Comment;
 use Laravie\SerializesQuery\Tests\Models\Post;
 use Laravie\SerializesQuery\Tests\Models\User;
 use Laravie\SerializesQuery\Tests\TestCase;
 use Mockery as m;
+use function Laravie\SerializesQuery\serialize;
+use function Laravie\SerializesQuery\unserialize;
 
 class EloquentTest extends TestCase
 {
@@ -17,7 +18,7 @@ class EloquentTest extends TestCase
     public function it_can_serialize_a_basic_eloquent_builder()
     {
         $builder = User::query();
-        $serialized = Eloquent::serialize($builder);
+        $serialized = serialize($builder);
 
         $this->assertSame([
             'model' => [
@@ -33,7 +34,7 @@ class EloquentTest extends TestCase
             ],
         ], $serialized);
 
-        $unserialize = Eloquent::unserialize($serialized);
+        $unserialize = unserialize($serialized);
 
         $this->assertSame('select * from "users"', $unserialize->toSql());
 
@@ -44,7 +45,7 @@ class EloquentTest extends TestCase
     public function it_can_serialize_a_basic_eloquent_builder_with_global_scopes()
     {
         $builder = Comment::query();
-        $serialized = Eloquent::serialize($builder);
+        $serialized = serialize($builder);
 
         $this->assertSame([
             'connection' => 'testing',
@@ -53,7 +54,7 @@ class EloquentTest extends TestCase
         ], $serialized['builder']);
         $this->assertSame(Comment::class, $serialized['model']['class']);
 
-        $unserialize = Eloquent::unserialize($serialized);
+        $unserialize = unserialize($serialized);
 
         $this->assertSame('select * from "comments" where "id" < ?', $unserialize->toSql());
         $this->assertSame($builder->toSql(), $unserialize->toSql());
@@ -66,11 +67,11 @@ class EloquentTest extends TestCase
             return $query->where('id', '>', 10);
         }]);
 
-        $serialized = Eloquent::serialize($builder);
+        $serialized = serialize($builder);
 
         $this->assertNotNull($serialized['model']['eager']['posts']);
 
-        $unserialize = Eloquent::unserialize($serialized);
+        $unserialize = unserialize($serialized);
 
         $query = m::mock(Builder::class);
 
@@ -87,7 +88,7 @@ class EloquentTest extends TestCase
     public function it_can_serialize_a_basic_eloquent_builder_on_custom_connection()
     {
         $builder = User::on('mysql');
-        $serialized = Eloquent::serialize($builder);
+        $serialized = serialize($builder);
 
         $this->assertSame([
             'model' => [
@@ -103,7 +104,7 @@ class EloquentTest extends TestCase
             ],
         ], $serialized);
 
-        $unserialize = Eloquent::unserialize($serialized);
+        $unserialize = unserialize($serialized);
 
         $this->assertSame('select * from `users`', $unserialize->toSql());
 
@@ -115,7 +116,7 @@ class EloquentTest extends TestCase
     public function it_can_serialize_a_basic_eloquent_builder_with_wheres()
     {
         $builder = User::query()->where('email', '=', 'crynobone@gmail.com');
-        $serialized = Eloquent::serialize($builder);
+        $serialized = serialize($builder);
 
         $this->assertSame([
             'model' => [
@@ -134,7 +135,7 @@ class EloquentTest extends TestCase
             ],
         ], $serialized);
 
-        $unserialize = Eloquent::unserialize($serialized);
+        $unserialize = unserialize($serialized);
 
         $this->assertSame('select * from "users" where "email" = ?', $unserialize->toSql());
 
@@ -148,7 +149,7 @@ class EloquentTest extends TestCase
             return $query->where('users.email', '=', 'crynobone@gmail.com');
         });
 
-        $serialized = Eloquent::serialize($builder);
+        $serialized = serialize($builder);
 
         $this->assertSame([
             'model' => [
@@ -180,7 +181,7 @@ class EloquentTest extends TestCase
             ],
         ], $serialized);
 
-        $unserialize = Eloquent::unserialize($serialized);
+        $unserialize = unserialize($serialized);
 
         $this->assertSame('select * from "posts" where exists (select * from "users" where "posts"."user_id" = "users"."id" and "users"."email" = ?)', $unserialize->toSql());
 
@@ -194,7 +195,7 @@ class EloquentTest extends TestCase
             return $query->whereIn('roles.id', [1]);
         });
 
-        $serialized = Eloquent::serialize($builder);
+        $serialized = serialize($builder);
 
         $this->assertSame([
             'model' => [
@@ -237,11 +238,11 @@ class EloquentTest extends TestCase
             ],
         ], $serialized);
 
-        $unserialize = Eloquent::unserialize($serialized);
+        $unserialize = unserialize($serialized);
 
         $this->assertSame('select * from "users" where exists (select * from "roles" inner join "user_role" on "roles"."id" = "user_role"."role_id" where "users"."id" = "user_role"."user_id" and "roles"."id" in (?))', $unserialize->toSql());
 
-        $this->assertSame($serialized, Eloquent::serialize($unserialize));
+        $this->assertSame($serialized, serialize($unserialize));
 
         $this->assertSame($builder->toSql(), $unserialize->toSql());
     }
@@ -253,7 +254,7 @@ class EloquentTest extends TestCase
             'id' => 5,
         ])->posts();
 
-        $serialized = Eloquent::serialize($builder);
+        $serialized = serialize($builder);
 
         $this->assertSame([
             'model' => [
@@ -285,7 +286,7 @@ class EloquentTest extends TestCase
             ],
         ], $serialized);
 
-        $unserialize = Eloquent::unserialize($serialized);
+        $unserialize = unserialize($serialized);
 
         $this->assertSame('select * from "posts" where "posts"."user_id" = ? and "posts"."user_id" is not null', $unserialize->toSql());
 

@@ -2,7 +2,7 @@
 
 namespace Laravie\SerializesQuery;
 
-use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Query\Builder as FluentQueryBuilder;
 use Illuminate\Support\Facades\DB;
 
 class Query
@@ -10,7 +10,7 @@ class Query
     /**
      * Serialize to basic Query Builder.
      */
-    public static function serialize(QueryBuilder $builder): array
+    public static function serialize(FluentQueryBuilder $builder): array
     {
         $connection = $builder->getConnection();
 
@@ -45,7 +45,7 @@ class Query
     /**
      * Unserialize to basic Query Builder.
      */
-    public static function unserialize(array $payload): QueryBuilder
+    public static function unserialize(array $payload): FluentQueryBuilder
     {
         $connection = $payload['connection'] ?? null;
 
@@ -57,7 +57,7 @@ class Query
     /**
      * Unserialize for basic Query Builder.
      */
-    public static function unserializeFor(QueryBuilder $builder, array $payload): QueryBuilder
+    public static function unserializeFor(FluentQueryBuilder $builder, array $payload): FluentQueryBuilder
     {
         \collect($payload)->transform(static function ($value, $type) use ($builder) {
             if ($type === 'wheres') {
