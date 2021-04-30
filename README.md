@@ -20,13 +20,17 @@ composer require "laravie/serialize-queries"
 
 ## Usages
 
-### Serialize Eloquent Builder
+### Eloquent Query Builder
+
+#### Serialize
 
 ```php
-Laravie\SerializesQuery\Eloquent::serialize(\Illuminate\Database\Eloquent\Builder $builder): array;
+Laravie\SerializesQuery\Eloquent::serialize(
+    \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation $builder
+): array;
 ```
 
-The method provide simple interface to serialize Eloquent Builder.
+The method provide simple interface to serialize Eloquent Query Builder.
 
 ```php
 use App\Model\User;
@@ -37,17 +41,53 @@ $query = User::has('posts')->where('age', '>', 25);
 $serializedQuery = Eloquent::serialize($query);
 ```
 
-### Unserialize Eloquent Builder
+#### Unserialize
 
 ```php
 Laravie\SerializesQuery\Eloquent::unserialize(array $payload): \Illuminate\Database\Eloquent\Builder;
 ```
 
-The method provide simple interface to unserialize Eloquent Builder.
+The method provide simple interface to unserialize Eloquent Query Builder.
 
 ```php
 use Laravie\SerializesQuery\Eloquent;
 
 
 $query = Eloquent::unserialize($serializedQuery);
+```
+
+### Fluent Query Builder
+
+#### Serialize
+
+```php
+Laravie\SerializesQuery\Query::serialize(
+    \Illuminate\Database\Query\Builder $builder
+): array;
+```
+
+The method provide simple interface to serialize Fluent Query Builder.
+
+```php
+use Illuminate\Support\Facades\DB;
+use Laravie\SerializesQuery\Query;
+
+$query = DB::table('users')->where('age', '>', 25);
+
+$serializedQuery = Query::serialize($query);
+```
+
+#### Unserialize 
+
+```php
+Laravie\SerializesQuery\Query::unserialize(array $payload): \Illuminate\Database\Query\Builder;
+```
+
+The method provide simple interface to unserialize Eloquent Builder.
+
+```php
+use Laravie\SerializesQuery\Query;
+
+
+$query = Query::unserialize($serializedQuery);
 ```

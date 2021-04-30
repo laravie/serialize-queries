@@ -10,6 +10,8 @@ class Eloquent
 {
     /**
      * Serialize from Eloquent Query Builder.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation  $builder
      */
     public static function serialize($builder): array
     {
