@@ -43,11 +43,11 @@ class Eloquent
             $model->setConnection($payload['model']['connection']);
         });
 
-        $builder = (new EloquentQueryBuilder(
-            Query::unserialize($payload['builder'])
-        ))->setModel($model);
-
-        return $model->registerGlobalScopes($builder)
+        return $model->registerGlobalScopes(
+                (new EloquentQueryBuilder(
+                    Query::unserialize($payload['builder'])
+                ))->setModel($model)
+            )
             ->setEagerLoads(
                 \collect($payload['model']['eager'])->map(function ($callback) {
                     return \unserialize($callback)->getClosure();

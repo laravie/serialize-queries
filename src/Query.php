@@ -20,10 +20,10 @@ class Query
             'bindings' => $builder->bindings,
             'distinct' => $builder->distinct,
             'from' => $builder->from,
-            'joins' => \collect($builder->joins)->map(static function ($join) {
+            'joins' => collect($builder->joins)->map(static function ($join) {
                 return JoinClause::serialize($join);
             })->all(),
-            'wheres' => \collect($builder->wheres)->map(static function ($where) {
+            'wheres' => collect($builder->wheres)->map(static function ($where) {
                 if (isset($where['query'])) {
                     $where['query'] = static::serialize($where['query']);
                 }
@@ -59,7 +59,7 @@ class Query
      */
     public static function unserializeFor(FluentQueryBuilder $builder, array $payload): FluentQueryBuilder
     {
-        \collect($payload)->transform(static function ($value, $type) use ($builder) {
+        collect($payload)->transform(static function ($value, $type) use ($builder) {
             if ($type === 'wheres') {
                 foreach ($value as $index => $where) {
                     if (isset($where['query']) && \is_array($where['query'])) {
