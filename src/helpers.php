@@ -29,6 +29,7 @@ function serialize($builder): array
  * Unserialize query builder.
  *
  * @param  string|array  $serialized
+ *
  * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
  */
 function unserialize($serialized)
