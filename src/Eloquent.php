@@ -25,7 +25,7 @@ class Eloquent
             'model' => [
                 'class' => \get_class($model),
                 'connection' => $model->getConnectionName(),
-                'eager' => \collect($builder->getEagerLoads())->map(function ($callback) {
+                'eager' => collect($builder->getEagerLoads())->map(function ($callback) {
                     return \serialize(new SerializableClosure($callback));
                 })->all(),
                 'removedScopes' => $builder->removedScopes(),
@@ -39,7 +39,7 @@ class Eloquent
      */
     public static function unserialize(array $payload): EloquentQueryBuilder
     {
-        $model = \tap(new $payload['model']['class'](), static function ($model) use ($payload) {
+        $model = tap(new $payload['model']['class'](), static function ($model) use ($payload) {
             $model->setConnection($payload['model']['connection']);
         });
 
@@ -49,7 +49,7 @@ class Eloquent
                 ))->setModel($model)
             )
             ->setEagerLoads(
-                \collect($payload['model']['eager'])->map(function ($callback) {
+                collect($payload['model']['eager'])->map(function ($callback) {
                     return \unserialize($callback)->getClosure();
                 })->all()
             )->withoutGlobalScopes($payload['model']['removedScopes']);
