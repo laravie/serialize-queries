@@ -15,11 +15,13 @@ class Eloquent
      */
     public static function serialize($builder): array
     {
-        if ($builder instanceof Relation) {
-            $builder = $builder->getQuery();
-        }
+        $model = with($builder, function ($builder) {
+            if ($builder instanceof Relation) {
+                return $builder->getQuery()->getModel();
+            }
 
-        $model = $builder->getModel();
+            return $builder->getModel();
+        });
 
         return [
             'model' => [
