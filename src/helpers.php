@@ -10,7 +10,7 @@ use InvalidArgumentException;
 /**
  * Serialize query builder.
  *
- * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation|\Illuminate\Database\Query\Builder  $builder
+ * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation|\Illuminate\Database\Query\Builder|mixed  $builder
  */
 function serialize($builder): array
 {

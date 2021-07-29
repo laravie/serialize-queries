@@ -12,10 +12,11 @@ class Query
      */
     public static function serialize(FluentQueryBuilder $builder): array
     {
+        /** @var string|\Illuminate\Database\ConnectionInterface $connection */
         $connection = $builder->getConnection();
 
         return \array_filter([
-            'connection' => \is_string($connection) ? $connection : $connection->getName(),
+            'connection' => is_string($connection) ? $connection : $connection->getName(),
             'columns' => $builder->columns,
             'bindings' => $builder->bindings,
             'distinct' => $builder->distinct,
