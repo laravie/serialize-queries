@@ -1,0 +1,17 @@
+includes:
+  - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+
+  paths:
+    - src
+
+  # The level 8 is the highest level
+  level: 5
+
+  ignoreErrors:
+    - '#Call to an undefined method Illuminate\\Database\\ConnectionInterface::getName\(\)#'
+
+  checkMissingIterableValueType: false
+  noUnnecessaryCollectionCall: false
+  checkModelProperties: false
