@@ -15,8 +15,8 @@ class Query
         /** @var string|\Illuminate\Database\ConnectionInterface $connection */
         $connection = $builder->getConnection();
 
-        return \array_filter([
-            'connection' => is_string($connection) ? $connection : $connection->getName(),
+        return array_filter([
+            'connection' => \is_string($connection) ? $connection : $connection->getName(),
             'columns' => $builder->columns,
             'bindings' => $builder->bindings,
             'distinct' => $builder->distinct,

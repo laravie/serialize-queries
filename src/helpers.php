@@ -34,7 +34,7 @@ function serialize($builder): array
  */
 function unserialize($serialized)
 {
-    $payload = \is_string($serialized) ? \unserialize($serialized) : $serialized;
+    $payload = \is_string($serialized) ? unserialize($serialized) : $serialized;
 
     if (\is_array($payload)) {
         if (isset($payload['model']) && isset($payload['builder'])) {
