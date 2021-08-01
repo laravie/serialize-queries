@@ -19,13 +19,14 @@ class Eloquent
             $builder = $builder->getQuery();
         }
 
+        /** @var \Illuminate\Database\Eloquent\Model $model */
         $model = $builder->getModel();
 
         return [
             'model' => [
                 'class' => \get_class($model),
                 'connection' => $model->getConnectionName(),
-                'eager' => \collect($builder->getEagerLoads())->map(function ($callback) {
+                'eager' => collect($builder->getEagerLoads())->map(function ($callback) {
                     return \serialize(new SerializableClosure($callback));
                 })->all(),
                 'removedScopes' => $builder->removedScopes(),
@@ -39,9 +40,13 @@ class Eloquent
      */
     public static function unserialize(array $payload): EloquentQueryBuilder
     {
-        $model = \tap(new $payload['model']['class'](), static function ($model) use ($payload) {
+        $model = tap(new $payload['model']['class'](), static function ($model) use ($payload) {
             $model->setConnection($payload['model']['connection']);
         });
+
+        // Register model global scopes to eloquent query builder, and
+        // use $payload['model']['removedScopes'] to exclude
+        // global removed scopes.
 
         return $model->registerGlobalScopes(
                 (new EloquentQueryBuilder(
@@ -49,7 +54,7 @@ class Eloquent
                 ))->setModel($model)
             )
             ->setEagerLoads(
-                \collect($payload['model']['eager'])->map(function ($callback) {
+                collect($payload['model']['eager'])->map(function ($callback) {
                     return \unserialize($callback)->getClosure();
                 })->all()
             )->withoutGlobalScopes($payload['model']['removedScopes']);

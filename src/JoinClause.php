@@ -13,7 +13,7 @@ class JoinClause
      */
     public static function serialize(JoinClauseBuilder $builder): array
     {
-        return \array_merge(Query::serialize($builder), [
+        return array_merge(Query::serialize($builder), [
             'type' => $builder->type,
             'table' => $builder->table,
         ]);

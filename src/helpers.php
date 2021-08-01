@@ -10,7 +10,7 @@ use InvalidArgumentException;
 /**
  * Serialize query builder.
  *
- * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation|\Illuminate\Database\Query\Builder  $builder
+ * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation|\Illuminate\Database\Query\Builder|mixed  $builder
  */
 function serialize($builder): array
 {
@@ -34,7 +34,7 @@ function serialize($builder): array
  */
 function unserialize($serialized)
 {
-    $payload = \is_string($serialized) ? \unserialize($serialized) : $serialized;
+    $payload = \is_string($serialized) ? unserialize($serialized) : $serialized;
 
     if (\is_array($payload)) {
         if (isset($payload['model']) && isset($payload['builder'])) {
