@@ -10,6 +10,8 @@ class User extends Model
 
     /**
      * Has many to relationship with Post.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function posts()
     {
@@ -18,6 +20,8 @@ class User extends Model
 
     /**
      * Has many and belongs to relationship with Role.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function roles()
     {

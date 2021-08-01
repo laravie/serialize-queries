@@ -10,6 +10,8 @@ class Role extends Model
 
     /**
      * Has many and belongs to relationship with Role.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users()
     {
