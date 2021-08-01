@@ -1,7 +1,3 @@
-includes:
-  - ./vendor/nunomaduro/larastan/extension.neon
-  - ./phpstan-baseline.neon
-
 parameters:
 
   paths:
@@ -10,6 +6,7 @@ parameters:
   # The level 8 is the highest level
   level: 8
 
+  ignoreErrors:
+    - '#Call to an undefined method Illuminate\\Database\\ConnectionInterface::(getName|query)\(\)#'
+
   checkMissingIterableValueType: false
-  noUnnecessaryCollectionCall: false
-  checkModelProperties: false

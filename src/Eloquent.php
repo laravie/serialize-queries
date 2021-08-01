@@ -19,6 +19,7 @@ class Eloquent
             $builder = $builder->getQuery();
         }
 
+        /** @var \Illuminate\Database\Eloquent\Model $model */
         $model = $builder->getModel();
 
         return [
