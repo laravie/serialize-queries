@@ -1,0 +1,7 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\ConnectionInterface\\:\\:getName\\(\\)\\.$#"
+			count: 1
+			path: src/Query.php
+

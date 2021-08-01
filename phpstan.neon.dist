@@ -7,10 +7,7 @@ parameters:
     - src
 
   # The level 8 is the highest level
-  level: 5
-
-  ignoreErrors:
-    - '#Call to an undefined method Illuminate\\Database\\ConnectionInterface::getName\(\)#'
+  level: 8
 
   checkMissingIterableValueType: false
   noUnnecessaryCollectionCall: false
