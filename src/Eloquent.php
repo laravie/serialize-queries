@@ -43,6 +43,10 @@ class Eloquent
             $model->setConnection($payload['model']['connection']);
         });
 
+        // Register model global scopes to eloquent query builder, and
+        // use $payload['model']['removedScopes'] to exclude
+        // global removed scopes.
+
         return $model->registerGlobalScopes(
                 (new EloquentQueryBuilder(
                     Query::unserialize($payload['builder'])
