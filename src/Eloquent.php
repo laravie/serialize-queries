@@ -27,7 +27,11 @@ class Eloquent
                 'class' => \get_class($model),
                 'connection' => $model->getConnectionName(),
                 'eager' => collect($builder->getEagerLoads())->map(function ($callback) {
-                    return \serialize(new SerializableClosure($callback));
+                    $closure = class_exists(SerializableClosureFactory::class)
+                        ? SerializableClosureFactory::make($callback)
+                        : new SerializableClosure($callback);
+
+                    return \serialize($closure);
                 })->all(),
                 'removedScopes' => $builder->removedScopes(),
             ],
