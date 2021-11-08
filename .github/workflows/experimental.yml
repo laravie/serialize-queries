@@ -1,4 +1,4 @@
-name: tests-on-windows
+name: experimental
 
 on:
   push:
@@ -11,21 +11,16 @@ jobs:
     strategy:
       matrix:
         os:
-          - "windows-latest"
+          - "ubuntu-latest"
         php:
-          - "7.3"
-          - "7.4"
-          - "8.0"
+          - "8.1"
         laravel:
-          - "^6.20.12"
-          - "^7.30.3"
-          - "^8.65"
+          - "^8.63"
         dependencies:
           - "locked"
           - "highest"
-          - "lowest"
         experimental:
-          - false
+          - true
 
     name: PHP${{ matrix.php }}-${{ matrix.os }} with Laravel ${{ matrix.laravel }} (${{ matrix.dependencies }})
 
@@ -48,7 +43,7 @@ jobs:
         uses: "ramsey/composer-install@v1"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "--prefer-dist --no-cache"
+          composer-options: "--prefer-dist --no-cache --ignore-platform-reqs"
 
       - name: Execute tests
         run: vendor/bin/phpunit
