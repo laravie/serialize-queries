@@ -19,7 +19,6 @@ jobs:
         dependencies:
           - "locked"
           - "highest"
-          - "lowest"
         experimental:
           - true
 
