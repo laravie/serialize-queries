@@ -13,6 +13,7 @@ class Eloquent
      * Serialize from Eloquent Query Builder.
      *
      * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation  $builder
+     * @return array<string, mixed>
      */
     public static function serialize($builder): array
     {
@@ -42,6 +43,8 @@ class Eloquent
 
     /**
      * Unserialize to Eloquent Query Builder.
+     * 
+     * @param  array<string, mixed>  $payload
      */
     public static function unserialize(array $payload): EloquentQueryBuilder
     {

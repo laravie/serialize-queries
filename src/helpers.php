@@ -11,6 +11,7 @@ use InvalidArgumentException;
  * Serialize query builder.
  *
  * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation|\Illuminate\Database\Query\Builder|mixed  $builder
+ * @return array<string, mixed>
  */
 function serialize($builder): array
 {
@@ -28,7 +29,7 @@ function serialize($builder): array
 /**
  * Unserialize query builder.
  *
- * @param  string|array  $serialized
+ * @param  string|array<string, mixed>  $serialized
  *
  * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
  */
