@@ -2,6 +2,14 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `laravie/serialize-queries`.
 
+## 1.0.1
+
+Released: 2021-12-12
+
+### Changes
+
+* Improves generic types docblock.
+
 ## 1.0.0
 
 Released: 2021-08-01
