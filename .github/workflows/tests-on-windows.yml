@@ -3,8 +3,6 @@ name: tests-on-windows
 on:
   push:
   pull_request:
-  schedule:
-    - cron: '0 0 * * 3'
 
 jobs:
   tests-on-php-8:
