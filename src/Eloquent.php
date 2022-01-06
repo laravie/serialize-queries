@@ -4,8 +4,8 @@ namespace Laravie\SerializesQuery;
 
 use Illuminate\Database\Eloquent\Builder as EloquentQueryBuilder;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Queue\SerializableClosure;
 use Illuminate\Queue\SerializableClosureFactory;
+use Laravel\SerializableClosure\SerializableClosure;
 
 class Eloquent
 {

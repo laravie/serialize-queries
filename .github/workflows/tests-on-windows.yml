@@ -5,7 +5,53 @@ on:
   pull_request:
 
 jobs:
-  tests:
+  tests-on-php-8:
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      matrix:
+        os:
+          - "windows-latest"
+        php:
+          - "8.0"
+          - "8.1"
+        laravel:
+          - "^8.65"
+          - "9.x-dev"
+        dependencies:
+          - "locked"
+          - "highest"
+          - "lowest"
+        experimental:
+          - false
+
+    name: PHP${{ matrix.php }}-${{ matrix.os }} with Laravel ${{ matrix.laravel }} (${{ matrix.dependencies }})
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, sqlite3, pdo_sqlite, pdo_mysql, bcmath, intl, gd, exif, iconv, imagick, fileinfo
+          coverage: none
+
+      - name: Install Laravel ${{ matrix.laravel }}
+        run: |
+          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
+
+      - name: Install dependencies
+        uses: "ramsey/composer-install@v1"
+        with:
+          dependency-versions: "${{ matrix.dependencies }}"
+          composer-options: "--prefer-dist --no-cache"
+
+      - name: Execute tests
+        run: vendor/bin/phpunit
+
+  tests-on-php-7:
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
     strategy:
@@ -15,144 +61,8 @@ jobs:
         php:
           - "7.3"
           - "7.4"
-          - "8.0"
-        laravel:
-          - "^6.20.26"
-          - "^7.30.3"
-          - "^8.65"
-        dependencies:
-          - "locked"
-          - "highest"
-          - "lowest"
-        experimental:
-          - false
-
-    name: PHP${{ matrix.php }}-${{ matrix.os }} with Laravel ${{ matrix.laravel }} (${{ matrix.dependencies }})
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v1
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, sqlite3, pdo_sqlite, pdo_mysql, bcmath, intl, gd, exif, iconv, imagick, fileinfo
-          coverage: none
-
-      - name: Install Laravel ${{ matrix.laravel }}
-        run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
-
-      - name: Install dependencies
-        uses: "ramsey/composer-install@v1"
-        with:
-          dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "--prefer-dist --no-cache"
-
-      - name: Execute tests
-        run: vendor/bin/phpunit
-
-  tests-on-php81:
-    runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.experimental }}
-    strategy:
-      matrix:
-        os:
-          - "windows-latest"
-        php:
-          - "8.1"
         laravel:
           - "^8.65"
-        dependencies:
-          - "locked"
-          - "highest"
-          - "lowest"
-        experimental:
-          - false
-
-    name: PHP${{ matrix.php }}-${{ matrix.os }} with Laravel ${{ matrix.laravel }} (${{ matrix.dependencies }})
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v1
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, sqlite3, pdo_sqlite, pdo_mysql, bcmath, intl, gd, exif, iconv, imagick, fileinfo
-          coverage: none
-
-      - name: Install Laravel ${{ matrix.laravel }}
-        run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
-
-      - name: Install dependencies
-        uses: "ramsey/composer-install@v1"
-        with:
-          dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "--prefer-dist --no-cache"
-
-      - name: Execute tests
-        run: vendor/bin/phpunit
-
-  tests-on-php-72:
-    runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.experimental }}
-    strategy:
-      matrix:
-        os:
-          - "windows-latest"
-        php:
-          - "7.2"
-        laravel:
-          - "^6.20.26"
-          - "^7.30.3"
-        dependencies:
-          - "locked"
-          - "highest"
-          - "lowest"
-        experimental:
-          - false
-
-    name: PHP${{ matrix.php }}-${{ matrix.os }} with Laravel ${{ matrix.laravel }} (${{ matrix.dependencies }})
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v1
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, sqlite3, pdo_sqlite, pdo_mysql, bcmath, intl, gd, exif, iconv, imagick, fileinfo
-          coverage: none
-
-      - name: Install Laravel ${{ matrix.laravel }}
-        run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
-
-      - name: Install dependencies
-        uses: "ramsey/composer-install@v1"
-        with:
-          dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "--prefer-dist --no-cache"
-
-      - name: Execute tests
-        run: vendor/bin/phpunit
-
-  test-on-php-71:
-    runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.experimental }}
-    strategy:
-      matrix:
-        os:
-          - "windows-latest"
-        php:
-          - "7.1"
-        laravel:
-          - "^5.8.35"
         dependencies:
           - "locked"
           - "highest"
