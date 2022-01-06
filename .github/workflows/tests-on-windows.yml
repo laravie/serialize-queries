@@ -16,8 +16,8 @@ jobs:
           - "8.0"
           - "8.1"
         laravel:
-          - "^8.65"
-          - "9.x-dev"
+          - "8.x"
+          - "9.x"
         dependencies:
           - "locked"
           - "highest"
@@ -62,7 +62,7 @@ jobs:
           - "7.3"
           - "7.4"
         laravel:
-          - "^8.65"
+          - "8.x"
         dependencies:
           - "locked"
           - "highest"
