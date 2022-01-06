@@ -10,6 +10,8 @@ class JoinClause
 {
     /**
      * Serialize to Join Clause Query Builder.
+     * 
+     * @return array<string, mixed>
      */
     public static function serialize(JoinClauseBuilder $builder): array
     {
@@ -21,6 +23,8 @@ class JoinClause
 
     /**
      * Unserialize to Join Clause Query Builder.
+     * 
+     * @param  array<int, array<string, mixed>>  $joins
      */
     public static function unserialize(FluentQueryBuilder $builder, array $joins): array
     {
