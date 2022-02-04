@@ -14,10 +14,10 @@ jobs:
           - "ubuntu-latest"
         php:
           - "8.0"
-        dependencies:
-          - "locked"
         laravel:
           - "8.x"
+        dependencies:
+          - "locked"
         experimental:
           - false
 
