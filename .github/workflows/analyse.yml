@@ -15,7 +15,7 @@ jobs:
         php:
           - "8.0"
         laravel:
-          - "9.x"
+          - "8.x"
         dependencies:
           - "locked"
         experimental:
@@ -37,7 +37,7 @@ jobs:
       - name: Install Laravel Framework ${{ matrix.laravel }}
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
-          composer require "nunomaduro/larastan" --dev --no-interaction --no-update
+          composer require "nunomaduro/larastan:^1.0.1" --dev --no-interaction --no-update
 
       - name: Install dependencies
         uses: "ramsey/composer-install@v1"

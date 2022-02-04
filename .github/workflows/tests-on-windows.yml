@@ -16,7 +16,6 @@ jobs:
           - "8.1"
         laravel:
           - "^8.65"
-          - "^9.0"
         dependencies:
           - "locked"
           - "highest"
@@ -63,7 +62,6 @@ jobs:
           - "^6.20.26"
           - "^7.30.3"
           - "^8.65"
-          - "^9.0"
         dependencies:
           - "locked"
           - "highest"
