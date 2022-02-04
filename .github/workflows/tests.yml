@@ -7,7 +7,7 @@ on:
     - cron: '0 0 * * 3'
 
 jobs:
-  tests-on-php-8:
+  tests-on-php81:
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
     strategy:
@@ -15,11 +15,10 @@ jobs:
         os:
           - "ubuntu-latest"
         php:
-          - "8.0"
           - "8.1"
         laravel:
-          - "8.x"
-          - "9.x"
+          - "^8.65"
+          - "^9.0"
         dependencies:
           - "locked"
           - "highest"
@@ -53,7 +52,7 @@ jobs:
       - name: Execute tests
         run: vendor/bin/phpunit
 
-  tests-on-php-7:
+  tests-on-php80:
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
     strategy:
@@ -61,10 +60,10 @@ jobs:
         os:
           - "ubuntu-latest"
         php:
-          - "7.3"
-          - "7.4"
+          - "8.0"
         laravel:
-          - "8.x"
+          - "^8.65"
+          - "^9.0"
         dependencies:
           - "locked"
           - "highest"

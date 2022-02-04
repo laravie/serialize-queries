@@ -14,12 +14,14 @@ jobs:
           - "ubuntu-latest"
         php:
           - "8.0"
+        laravel:
+          - "8.x"
         dependencies:
           - "locked"
         experimental:
           - false
 
-    name: PHP${{ matrix.php }} on ${{ matrix.os }} (${{ matrix.dependencies }})
+    name: Laravel ${{ matrix.laravel }} on PHP${{ matrix.php }}-${{ matrix.os }} (${{ matrix.dependencies }})
 
     steps:
       - name: Checkout code
@@ -31,6 +33,10 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip, pcntl, sqlite3, pdo_sqlite, pdo_mysql, bcmath, intl, gd, exif, iconv, imagick, fileinfo
           coverage: xdebug
+
+      - name: Install Laravel Framework ${{ matrix.laravel }}
+        run: |
+          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
 
       - name: Install dependencies
         uses: "ramsey/composer-install@v1"
