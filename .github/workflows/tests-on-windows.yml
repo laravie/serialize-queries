@@ -17,7 +17,6 @@ jobs:
         laravel:
           - "^8.65"
         dependencies:
-          - "locked"
           - "highest"
           - "lowest"
         experimental:
@@ -63,7 +62,6 @@ jobs:
           - "^7.30.3"
           - "^8.65"
         dependencies:
-          - "locked"
           - "highest"
           - "lowest"
         experimental:
@@ -109,7 +107,6 @@ jobs:
           - "^7.30.3"
           - "^8.65"
         dependencies:
-          - "locked"
           - "highest"
           - "lowest"
         experimental:
@@ -155,7 +152,6 @@ jobs:
           - "^7.30.3"
           - "^8.65"
         dependencies:
-          - "locked"
           - "highest"
           - "lowest"
         experimental:
@@ -200,7 +196,6 @@ jobs:
           - "^6.20.26"
           - "^7.30.3"
         dependencies:
-          - "locked"
           - "highest"
           - "lowest"
         experimental:
@@ -244,7 +239,6 @@ jobs:
         laravel:
           - "^5.8.35"
         dependencies:
-          - "locked"
           - "highest"
           - "lowest"
         experimental:

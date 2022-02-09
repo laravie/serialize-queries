@@ -17,7 +17,7 @@ jobs:
         laravel:
           - "8.x"
         dependencies:
-          - "locked"
+          - "highest"
         experimental:
           - false
 
