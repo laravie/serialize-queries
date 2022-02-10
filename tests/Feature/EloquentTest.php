@@ -110,7 +110,7 @@ class EloquentTest extends TestCase
 
         $unserialize = unserialize($serialized);
 
-        $this->assertSame('select * from "users"', $unserialize->toSql());
+        $this->assertSame('select * from "users" where "users"."deleted_at" is not null', $unserialize->toSql());
 
         $this->assertSame($builder->toSql(), $unserialize->toSql());
     }
