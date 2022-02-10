@@ -35,7 +35,7 @@ class EloquentTest extends TestCase
 
         $unserialize = unserialize($serialized);
 
-        $this->assertSame('select * from "users"', $unserialize->toSql());
+        $this->assertSame('select * from "users" where "users"."deleted_at" is null', $unserialize->toSql());
 
         $this->assertSame($builder->toSql(), $unserialize->toSql());
     }
@@ -78,6 +78,38 @@ class EloquentTest extends TestCase
 
         $unserialize->getEagerLoads()['posts']($query);
 
+        $this->assertSame('select * from "users" where "users"."deleted_at" is null', $unserialize->toSql());
+
+        $this->assertSame($builder->toSql(), $unserialize->toSql());
+    }
+
+    /** @test */
+    public function it_can_serialize_a_softdeleted_eloquent_builder()
+    {
+        $builder = User::query()->onlyTrashed();
+        $serialized = serialize($builder);
+
+        $this->assertSame([
+            'model' => [
+                'class' => User::class,
+                'connection' => null,
+                'eager' => [],
+                'removedScopes' => [
+                    'Illuminate\Database\Eloquent\SoftDeletingScope',
+                ],
+            ],
+            'builder' => [
+                'connection' => 'testing',
+                'bindings' => $this->defaultBindings(),
+                'from' => 'users',
+                'wheres' => [
+                    ['type' => 'NotNull', 'column' => 'users.deleted_at', 'boolean' => 'and'],
+                ],
+            ],
+        ], $serialized);
+
+        $unserialize = unserialize($serialized);
+
         $this->assertSame('select * from "users"', $unserialize->toSql());
 
         $this->assertSame($builder->toSql(), $unserialize->toSql());
@@ -105,7 +137,7 @@ class EloquentTest extends TestCase
 
         $unserialize = unserialize($serialized);
 
-        $this->assertSame('select * from `users`', $unserialize->toSql());
+        $this->assertSame('select * from `users` where `users`.`deleted_at` is null', $unserialize->toSql());
 
         $this->assertSame($builder->toSql(), $unserialize->toSql());
         $this->assertSame('mysql', $unserialize->getModel()->getConnectionName());
@@ -136,7 +168,7 @@ class EloquentTest extends TestCase
 
         $unserialize = unserialize($serialized);
 
-        $this->assertSame('select * from "users" where "email" = ?', $unserialize->toSql());
+        $this->assertSame('select * from "users" where "email" = ? and "users"."deleted_at" is null', $unserialize->toSql());
 
         $this->assertSame($builder->toSql(), $unserialize->toSql());
     }
@@ -172,6 +204,7 @@ class EloquentTest extends TestCase
                             'wheres' => [
                                 ['type' => 'Column', 'first' => 'posts.user_id', 'operator' => '=', 'second' => 'users.id', 'boolean' => 'and'],
                                 ['type' => 'Basic', 'column' => 'users.email', 'operator' => '=', 'value' => 'crynobone@gmail.com', 'boolean' => 'and'],
+                                ['type' => 'Null', 'column' => 'users.deleted_at', 'boolean' => 'and'],
                             ],
                         ],
                         'boolean' => 'and',
@@ -182,7 +215,7 @@ class EloquentTest extends TestCase
 
         $unserialize = unserialize($serialized);
 
-        $this->assertSame('select * from "posts" where exists (select * from "users" where "posts"."user_id" = "users"."id" and "users"."email" = ?)', $unserialize->toSql());
+        $this->assertSame('select * from "posts" where exists (select * from "users" where "posts"."user_id" = "users"."id" and "users"."email" = ? and "users"."deleted_at" is null)', $unserialize->toSql());
 
         $this->assertSame($builder->toSql(), $unserialize->toSql());
     }
@@ -239,7 +272,7 @@ class EloquentTest extends TestCase
 
         $unserialize = unserialize($serialized);
 
-        $this->assertSame('select * from "users" where exists (select * from "roles" inner join "user_role" on "roles"."id" = "user_role"."role_id" where "users"."id" = "user_role"."user_id" and "roles"."id" in (?))', $unserialize->toSql());
+        $this->assertSame('select * from "users" where exists (select * from "roles" inner join "user_role" on "roles"."id" = "user_role"."role_id" where "users"."id" = "user_role"."user_id" and "roles"."id" in (?)) and "users"."deleted_at" is null', $unserialize->toSql());
 
         $this->assertSame($serialized, serialize($unserialize));
 
