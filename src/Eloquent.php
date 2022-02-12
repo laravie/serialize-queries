@@ -57,9 +57,9 @@ class Eloquent
         // global removed scopes.
 
         return $model->registerGlobalScopes(
-                (new EloquentQueryBuilder(
+                $model->newEloquentBuilder(
                     Query::unserialize($payload['builder'])
-                ))->setModel($model)
+                )->setModel($model)
             )
             ->setEagerLoads(
                 collect($payload['model']['eager'])->map(function ($callback) {
