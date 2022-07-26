@@ -38,7 +38,13 @@ class Query
             'orders' => $builder->orders,
             'limit' => $builder->limit,
             'offset' => $builder->offset,
-            'unions' => $builder->unions,
+            'unions' => collect($builder->unions)->map(static function ($union) {
+                if (isset($union['query'])) {
+                    $union['query'] = static::serialize($union['query']);
+                }
+    
+                return $union;
+            })->all(),
             'unionLimit' => $builder->unionLimit,
             'unionOrders' => $builder->unionOrders,
             'lock' => $builder->lock,
@@ -69,6 +75,14 @@ class Query
                 foreach ($value as $index => $where) {
                     if (isset($where['query']) && \is_array($where['query'])) {
                         $value[$index]['query'] = static::unserialize($where['query']);
+                    }
+                }
+            }
+
+            if ($type === 'unions') {
+                foreach ($value as $index => $union) {
+                    if (isset($union['query']) && \is_array($union['query'])) {
+                        $value[$index]['query'] = static::unserialize($union['query']);
                     }
                 }
             }
