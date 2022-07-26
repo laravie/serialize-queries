@@ -48,4 +48,20 @@ class QueryTest extends TestCase
 
         $this->assertSame($builder->toSql(), $unserialize->toSql());
     }
+
+    /** @test */
+    public function it_can_serialize_a_basic_query_builder_with_unions()
+    {
+        $builder = DB::table('users')->where('email', '=', 'crynobone@gmail.com');
+        $union = DB::table('users')->where('email', '=', 'johndoe@gmail.com')
+            ->union($builder);
+
+        $serialized = serialize($union);
+
+        $unserialize = unserialize($serialized);
+
+        $this->assertSame('select * from (select * from "users" where "email" = ?) union select * from (select * from "users" where "email" = ?)', $unserialize->toSql());
+
+        $this->assertSame($union->toSql(), $unserialize->toSql());
+    }
 }
