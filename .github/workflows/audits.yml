@@ -1,0 +1,54 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * 3'
+
+jobs:
+  tests-on-php81:
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      matrix:
+        os:
+          - "ubuntu-latest"
+        php:
+          - "8.1"
+        laravel:
+          - "^8.65"
+        dependencies:
+          - "highest"
+          - "lowest"
+        experimental:
+          - false
+
+    name: PHP${{ matrix.php }}-${{ matrix.os }} with Laravel ${{ matrix.laravel }} (highest)
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, sqlite3, pdo_sqlite, pdo_mysql, bcmath, intl, gd, exif, iconv, imagick, fileinfo
+          coverage: none
+
+      - name: Install Laravel ${{ matrix.laravel }}
+        run: |
+          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
+
+      - name: Install dependencies
+        uses: "ramsey/composer-install@v1"
+        with:
+          dependency-versions: "highest"
+          composer-options: "--prefer-dist --prefer-stable --no-cache"
+
+      - name: Installed dependencies
+        run: composer show -D
+
+      - name: Audit dependencies
+        run: composer audit
