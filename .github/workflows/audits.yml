@@ -1,4 +1,4 @@
-name: tests
+name: audits
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     - cron: '0 0 * * 3'
 
 jobs:
-  tests-on-php81:
+  audit-dependencies:
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
     strategy:
@@ -15,16 +15,14 @@ jobs:
         os:
           - "ubuntu-latest"
         php:
+          - "8.0"
           - "8.1"
         laravel:
-          - "^8.65"
-        dependencies:
-          - "highest"
-          - "lowest"
+          - "9.x"
         experimental:
           - false
 
-    name: PHP${{ matrix.php }}-${{ matrix.os }} with Laravel ${{ matrix.laravel }} (highest)
+    name: PHP${{ matrix.php }}-${{ matrix.os }} with Laravel ${{ matrix.laravel }}
 
     steps:
       - name: Checkout code
