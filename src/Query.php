@@ -9,7 +9,7 @@ class Query
 {
     /**
      * Serialize to basic Query Builder.
-     * 
+     *
      * @return array<string, mixed>
      */
     public static function serialize(FluentQueryBuilder $builder): array
@@ -42,7 +42,7 @@ class Query
                 if (isset($union['query'])) {
                     $union['query'] = static::serialize($union['query']);
                 }
-    
+
                 return $union;
             })->all(),
             'unionLimit' => $builder->unionLimit,
@@ -53,7 +53,7 @@ class Query
 
     /**
      * Unserialize to basic Query Builder.
-     * 
+     *
      * @param  array<string, mixed>  $payload
      */
     public static function unserialize(array $payload): FluentQueryBuilder
