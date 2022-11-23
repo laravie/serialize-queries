@@ -39,7 +39,7 @@ class Eloquent
                         ? SerializableClosureFactory::make($callback)
                         : new SerializableClosure($callback);
 
-                    return serialize($closure);
+                    return \serialize($closure);
                 })->all(),
                 'removedScopes' => $builder->removedScopes(),
             ],
@@ -70,7 +70,7 @@ class Eloquent
             ->setEagerLoads(
                 collect($payload['model']['eager'])
                     ->map(function ($callback) {
-                        return unserialize($callback)->getClosure();
+                        return \unserialize($callback)->getClosure();
                     })->all()
             )->withoutGlobalScopes($payload['model']['removedScopes']);
     }
