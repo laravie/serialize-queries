@@ -68,10 +68,9 @@ class Eloquent
             )->setModel($model)
         )
             ->setEagerLoads(
-                collect($payload['model']['eager'])
-                    ->map(function ($callback) {
-                        return \unserialize($callback)->getClosure();
-                    })->all()
+                collect($payload['model']['eager'])->map(function ($callback) {
+                    return \unserialize($callback)->getClosure();
+                })->all()
             )->withoutGlobalScopes($payload['model']['removedScopes']);
     }
 }
