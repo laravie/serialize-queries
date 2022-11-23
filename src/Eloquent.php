@@ -66,11 +66,10 @@ class Eloquent
             $model->newEloquentBuilder(
                 Query::unserialize($payload['builder'])
             )->setModel($model)
-        )
-            ->setEagerLoads(
-                collect($payload['model']['eager'])->map(function ($callback) {
-                    return \unserialize($callback)->getClosure();
-                })->all()
-            )->withoutGlobalScopes($payload['model']['removedScopes']);
+        )->setEagerLoads(
+            collect($payload['model']['eager'])->map(function ($callback) {
+                return \unserialize($callback)->getClosure();
+            })->all()
+        )->withoutGlobalScopes($payload['model']['removedScopes']);
     }
 }
