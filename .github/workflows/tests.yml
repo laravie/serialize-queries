@@ -16,7 +16,7 @@ jobs:
         os:
           - "ubuntu-latest"
         php:
-          - "8.2"
+          - 8.2
         laravel:
           - "9.x"
         dependencies:
@@ -39,8 +39,11 @@ jobs:
           coverage: none
 
       - name: Install Laravel ${{ matrix.laravel }}
-        run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
+        run: composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
+
+      - name: Add PHP 8.1 Requirements
+        run: composer require ramsey/collection:^1.2 --no-interaction --no-update
+        if: matrix.php >= 8.1
 
       - name: Install dependencies
         uses: "ramsey/composer-install@v2"
@@ -62,7 +65,7 @@ jobs:
         os:
           - "ubuntu-latest"
         php:
-          - "8.1"
+          - 8.1
         laravel:
           - "8.x"
           - "9.x"
@@ -86,8 +89,11 @@ jobs:
           coverage: none
 
       - name: Install Laravel ${{ matrix.laravel }}
-        run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
+        run: composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
+
+      - name: Add PHP 8.1 Requirements
+        run: composer require --no-interaction --no-update
+        if: matrix.php >= 8.1
 
       - name: Install dependencies
         uses: "ramsey/composer-install@v2"
@@ -109,7 +115,7 @@ jobs:
         os:
           - "ubuntu-latest"
         php:
-          - "8.0"
+          - '8.0'
         laravel:
           - "8.x"
           - "9.x"
@@ -133,8 +139,7 @@ jobs:
           coverage: none
 
       - name: Install Laravel ${{ matrix.laravel }}
-        run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
+        run: composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
 
       - name: Install dependencies
         uses: "ramsey/composer-install@v2"
@@ -156,8 +161,8 @@ jobs:
         os:
           - "ubuntu-latest"
         php:
-          - "7.3"
-          - "7.4"
+          - 7.3
+          - 7.4
         laravel:
           - "8.x"
         dependencies:
@@ -180,8 +185,7 @@ jobs:
           coverage: none
 
       - name: Install Laravel ${{ matrix.laravel }}
-        run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
+        run: composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
 
       - name: Install dependencies
         uses: "ramsey/composer-install@v2"
