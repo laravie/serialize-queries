@@ -25,5 +25,6 @@
         <env name="APP_ENV" value="testing"/>
         <env name="APP_KEY" value="AckfSECXIvnK5r28GVIWUAxmbBSjTsmF"/>
         <env name="DB_CONNECTION" value="testing"/>
+        <env name="LOG_DEPRECATIONS_CHANNEL" value="stderr"/>
     </php>
 </phpunit>
