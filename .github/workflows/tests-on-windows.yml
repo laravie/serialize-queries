@@ -17,6 +17,7 @@ jobs:
           - 8.2
         laravel:
           - "9.x"
+          - "10.x"
         dependencies:
           - "highest"
           - "lowest"
@@ -67,6 +68,7 @@ jobs:
         laravel:
           - "8.x"
           - "9.x"
+          - "10.x"
         dependencies:
           - "highest"
           - "lowest"
