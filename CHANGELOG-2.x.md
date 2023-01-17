@@ -2,6 +2,14 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `laravie/serialize-queries`.
 
+## 2.2.0
+
+Released: 2023-01-17
+
+### Changes
+
+* Added support for Laravel Framework v10.
+
 ## 2.1.0
 
 Released: 2022-11-23
