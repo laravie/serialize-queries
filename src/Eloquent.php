@@ -18,7 +18,7 @@ class Eloquent
     /**
      * Serialize from Eloquent Query Builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation  $builder
+     * @param  \Illuminate\Contracts\Database\Eloquent\Builder  $builder
      * @return array{model: array<string, mixed>, builder: array<string, mixed>}
      */
     public static function serialize($builder): array
