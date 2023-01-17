@@ -39,10 +39,6 @@ jobs:
           composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
           composer require "nunomaduro/larastan:^1.0.1" --dev --no-interaction --no-update
 
-      - name: Install Laravel Pint
-        run: |
-          composer require "laravel/pint:^1.1" --no-interaction --no-update
-
       - name: Install dependencies
         uses: "ramsey/composer-install@v2"
         with:
