@@ -29,7 +29,7 @@
     },
     "require-dev": {
         "orchestra/testbench": "^6.22 || ^7.16 || ^8.0",
-        "phpstan/phpstan": "^1.8"
+        "phpstan/phpstan": "^1.9.14"
     },
     "config": {
         "sort-packages": true
@@ -39,6 +39,5 @@
             "dev-master": "2.x-dev"
         }
     },
-    "prefer-stable": true,
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }
