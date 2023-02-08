@@ -7,7 +7,7 @@ on:
     - cron: '0 0 * * 3'
 
 jobs:
-  audit-dependencies-laravel-10:
+  audit-dependencies-on-laravel-10:
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
     strategy:
@@ -51,7 +51,7 @@ jobs:
       - name: Audit dependencies
         run: composer audit
 
-  audit-dependencies-laravel-9:
+  audit-dependencies-on-laravel-9:
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
     strategy:
@@ -95,4 +95,3 @@ jobs:
 
       - name: Audit dependencies
         run: composer audit
-
