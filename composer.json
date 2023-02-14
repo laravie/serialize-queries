@@ -29,8 +29,8 @@
     },
     "require-dev": {
         "orchestra/testbench": "^6.22 || ^7.16 || ^8.0",
-        "phpunit/phpunit": "^9.5.10",
-        "phpstan/phpstan": "^1.9.14"
+        "phpstan/phpstan": "^1.9.14",
+        "phpunit/phpunit": "^9.6"
     },
     "config": {
         "sort-packages": true
