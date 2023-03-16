@@ -33,9 +33,9 @@ class Eloquent
             'model' => [
                 'class' => \get_class($model),
                 'connection' => $model->getConnectionName(),
-                'eager' => collect($builder->getEagerLoads())->map(function ($callback) {
-                    return \serialize(new SerializableClosure($callback));
-                })->all(),
+                'eager' => collect($builder->getEagerLoads())
+                    ->map(fn ($callback) => \serialize(new SerializableClosure($callback)))
+                    ->all(),
                 'removedScopes' => $builder->removedScopes(),
             ],
             'builder' => Query::serialize($builder->getQuery()),
