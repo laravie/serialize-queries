@@ -19,6 +19,8 @@ class Eloquent
      *
      * @param  \Illuminate\Contracts\Database\Eloquent\Builder  $builder
      * @return array{model: array<string, mixed>, builder: array<string, mixed>}
+     *
+     * @phpstan-return TPayload
      */
     public static function serialize($builder): array
     {
@@ -45,7 +47,9 @@ class Eloquent
     /**
      * Unserialize to Eloquent Query Builder.
      *
-     * @param  TPayload  $payload
+     * @param  array{model: array<string, mixed>, builder: array<string, mixed>}  $payload
+     *
+     * @phpstan-param  TPayload  $payload
      */
     public static function unserialize(array $payload): EloquentQueryBuilder
     {
