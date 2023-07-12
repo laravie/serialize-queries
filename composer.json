@@ -40,6 +40,13 @@
             "dev-master": "2.x-dev"
         }
     },
+    "scripts": {
+        "ci": [
+            "@composer audit",
+            "@php vendor/bin/phpstan analyse"
+        ],
+        "test": "@php vendor/bin/phpunit -c ./ --color"
+    },
     "prefer-stable": true,
     "minimum-stability": "dev"
 }
