@@ -24,11 +24,11 @@
     },
     "require": {
         "php": "^7.3 || ^8.0",
-        "illuminate/database": "^8.67 || ^9.44 || ^10.0",
-        "illuminate/queue": "^8.67 || ^9.44 || ^10.0"
+        "illuminate/database": "^8.67 || ^9.44 || ^10.4",
+        "illuminate/queue": "^8.67 || ^9.44 || ^10.4"
     },
     "require-dev": {
-        "orchestra/testbench": "^6.22 || ^7.16 || ^8.0",
+        "orchestra/testbench": "^6.22 || ^7.16 || ^8.1",
         "phpstan/phpstan": "^1.10.16",
         "phpunit/phpunit": "^9.6.8"
     },
