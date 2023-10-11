@@ -3,8 +3,9 @@
 namespace Laravie\SerializesQuery\Tests\Feature;
 
 use Illuminate\Support\Facades\DB;
-use function Laravie\SerializesQuery\serialize;
 use Laravie\SerializesQuery\Tests\TestCase;
+
+use function Laravie\SerializesQuery\serialize;
 use function Laravie\SerializesQuery\unserialize;
 
 class QueryTest extends TestCase

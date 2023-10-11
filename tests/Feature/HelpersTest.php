@@ -2,8 +2,9 @@
 
 namespace Laravie\SerializesQuery\Tests\Feature;
 
-use function Laravie\SerializesQuery\serialize;
 use Laravie\SerializesQuery\Tests\TestCase;
+
+use function Laravie\SerializesQuery\serialize;
 use function Laravie\SerializesQuery\unserialize;
 
 class HelpersTest extends TestCase
