@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.4/phpunit.xsd"
          backupGlobals="false"
-         backupStaticAttributes="false"
          colors="true"
-         convertDeprecationsToExceptions="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false"
-         verbose="true">
-    <coverage includeUncoveredFiles="false">
-        <include>
-            <directory suffix=".php">src</directory>
-        </include>
-    </coverage>
+         cacheDirectory=".phpunit.cache"
+         backupStaticProperties="false"
+>
+    <coverage includeUncoveredFiles="false"/>
     <testsuites>
         <testsuite name="tests">
-            <directory suffix="Test.php">tests</directory>
+            <directory suffix="Test.php">tests/</directory>
         </testsuite>
     </testsuites>
     <php>
@@ -27,4 +20,9 @@
         <env name="DB_CONNECTION" value="testing"/>
         <env name="LOG_DEPRECATIONS_CHANNEL" value="stderr"/>
     </php>
+    <source>
+        <include>
+            <directory suffix=".php">src/</directory>
+        </include>
+    </source>
 </phpunit>
