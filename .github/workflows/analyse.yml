@@ -13,9 +13,9 @@ jobs:
         os:
           - "ubuntu-latest"
         php:
-          - "8.0"
+          - 8.2
         laravel:
-          - "9.x"
+          - "10.x"
         dependencies:
           - "highest"
         experimental:
@@ -37,7 +37,6 @@ jobs:
       - name: Install Laravel Framework ${{ matrix.laravel }}
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
-          composer require "nunomaduro/larastan:^1.0.1" --dev --no-interaction --no-update
 
       - name: Install Laravel Pint
         run: |
