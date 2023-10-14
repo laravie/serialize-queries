@@ -2,7 +2,7 @@ parameters:
 
   paths:
     - src
-    - tests/Models
+    - workbench
 
   # The level 8 is the highest level
   level: 8

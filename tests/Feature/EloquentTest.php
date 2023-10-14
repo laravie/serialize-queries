@@ -10,9 +10,8 @@ use Workbench\App\Models\Post;
 use Workbench\App\Models\User;
 
 use function Laravie\SerializesQuery\serialize;
-use function Laravie\SerializesQuery\unserialize;
-
 use function Laravie\SerializesQuery\serialize;
+use function Laravie\SerializesQuery\unserialize;
 use function Laravie\SerializesQuery\unserialize;
 
 class EloquentTest extends TestCase
