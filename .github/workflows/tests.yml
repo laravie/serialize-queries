@@ -15,6 +15,7 @@ jobs:
       matrix:
         os:
           - "ubuntu-latest"
+          - "windows-latest"
         php:
           - 8.2
         laravel:
@@ -65,6 +66,7 @@ jobs:
       matrix:
         os:
           - "ubuntu-latest"
+          - "windows-latest"
         php:
           - 8.1
         laravel:
@@ -93,9 +95,13 @@ jobs:
       - name: Install Laravel ${{ matrix.laravel }}
         run: composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
 
-      - name: Add PHP 8.1 Requirements
+      - name: Add PHP 8.1 Requirements for ubuntu-latest
         run: composer require "ramsey/collection:^1.2" --no-interaction --no-update
-        if: matrix.php >= 8.1
+        if: matrix.php >= 8.1 && matrix.os !== 'windows-latest'
+
+      - name: Add PHP 8.1 Requirements for windows-latest
+        run: composer require "ramsey/collection:~1.2" --no-interaction --no-update
+        if: matrix.php >= 8.1 && matrix.os === 'windows-latest'
 
       - name: Install dependencies
         uses: "ramsey/composer-install@v2"
