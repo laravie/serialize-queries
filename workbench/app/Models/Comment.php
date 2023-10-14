@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravie\SerializesQuery\Tests\Models;
+namespace Workbench\App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;

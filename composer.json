@@ -19,7 +19,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Laravie\\SerializesQuery\\Tests\\": "tests/"
+            "Laravie\\SerializesQuery\\Tests\\": "tests/",
+            "Workbench\\App\\": "workbench/app/"
         }
     },
     "require": {
@@ -48,7 +49,19 @@
             "@php vendor/bin/pint",
             "@php vendor/bin/phpstan analyse"
         ],
-        "test": "@php vendor/bin/phpunit -c ./ --color"
+        "test": "@php vendor/bin/phpunit -c ./ --color",
+        "post-autoload-dump": "@prepare",
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "serve": [
+            "@build",
+            "@php vendor/bin/testbench serve"
+        ],
+        "lint": [
+            "pint",
+            "@php vendor/bin/phpstan analyse"
+        ]
     },
     "prefer-stable": true,
     "minimum-stability": "dev"
