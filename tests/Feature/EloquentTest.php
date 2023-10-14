@@ -3,13 +3,14 @@
 namespace Laravie\SerializesQuery\Tests\Feature;
 
 use Illuminate\Database\Eloquent\Builder;
-use function Laravie\SerializesQuery\serialize;
-use Laravie\SerializesQuery\Tests\Models\Comment;
-use Laravie\SerializesQuery\Tests\Models\Post;
-use Laravie\SerializesQuery\Tests\Models\User;
 use Laravie\SerializesQuery\Tests\TestCase;
-use function Laravie\SerializesQuery\unserialize;
 use Mockery as m;
+use Workbench\App\Models\Comment;
+use Workbench\App\Models\Post;
+use Workbench\App\Models\User;
+
+use function Laravie\SerializesQuery\serialize;
+use function Laravie\SerializesQuery\unserialize;
 
 class EloquentTest extends TestCase
 {
