@@ -9,6 +9,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Workbench\App\Models\Comment;
 use Workbench\App\Models\Post;
 use Workbench\App\Models\User;
+
 use function Laravie\SerializesQuery\serialize;
 use function Laravie\SerializesQuery\unserialize;
 

@@ -4,6 +4,7 @@ namespace Laravie\SerializesQuery\Tests\Feature;
 
 use Laravie\SerializesQuery\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
+
 use function Laravie\SerializesQuery\serialize;
 use function Laravie\SerializesQuery\unserialize;
 
