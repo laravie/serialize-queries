@@ -46,8 +46,8 @@
     "scripts": {
         "ci": [
             "@composer audit",
-            "@php vendor/bin/pint",
-            "@php vendor/bin/phpstan analyse"
+            "@lint",
+            "@test"
         ],
         "test": "@php vendor/bin/phpunit -c ./ --color",
         "post-autoload-dump": "@prepare",

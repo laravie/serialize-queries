@@ -6,5 +6,6 @@
 /phpstan.neon
 
 # PHPUnit
+/.phpunit.cache/
 /.phpunit.result.cache
 /phpunit.xml
