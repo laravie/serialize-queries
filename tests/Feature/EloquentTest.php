@@ -5,16 +5,16 @@ namespace Laravie\SerializesQuery\Tests\Feature;
 use Illuminate\Database\Eloquent\Builder;
 use Laravie\SerializesQuery\Tests\TestCase;
 use Mockery as m;
+use PHPUnit\Framework\Attributes\Test;
 use Workbench\App\Models\Comment;
 use Workbench\App\Models\Post;
 use Workbench\App\Models\User;
-
 use function Laravie\SerializesQuery\serialize;
 use function Laravie\SerializesQuery\unserialize;
 
 class EloquentTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_can_serialize_a_basic_eloquent_builder()
     {
         $builder = User::query();
@@ -41,7 +41,7 @@ class EloquentTest extends TestCase
         $this->assertSame($builder->toSql(), $unserialize->toSql());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_serialize_a_basic_eloquent_builder_with_global_scopes()
     {
         $builder = Comment::query();
@@ -60,7 +60,7 @@ class EloquentTest extends TestCase
         $this->assertSame($builder->toSql(), $unserialize->toSql());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_serialize_a_basic_eloquent_with_eager_relations()
     {
         $builder = User::with(['posts' => function ($query) {
@@ -84,7 +84,7 @@ class EloquentTest extends TestCase
         $this->assertSame($builder->toSql(), $unserialize->toSql());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_serialize_a_softdeleted_eloquent_builder()
     {
         $builder = User::query()->onlyTrashed();
@@ -116,7 +116,7 @@ class EloquentTest extends TestCase
         $this->assertSame($builder->toSql(), $unserialize->toSql());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_serialize_a_basic_eloquent_builder_on_custom_connection()
     {
         $builder = User::on('mysql');
@@ -144,7 +144,7 @@ class EloquentTest extends TestCase
         $this->assertSame('mysql', $unserialize->getModel()->getConnectionName());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_serialize_a_basic_eloquent_builder_with_wheres()
     {
         $builder = User::query()->where('email', '=', 'crynobone@gmail.com');
@@ -174,7 +174,7 @@ class EloquentTest extends TestCase
         $this->assertSame($builder->toSql(), $unserialize->toSql());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_serialize_a_basic_eloquent_builder_with_join()
     {
         $builder = Post::whereHas('user', function ($query) {
@@ -221,7 +221,7 @@ class EloquentTest extends TestCase
         $this->assertSame($builder->toSql(), $unserialize->toSql());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_serialize_a_basic_eloquent_builder_with_belongs_to_many_join()
     {
         $builder = User::whereHas('roles', function ($query) {
@@ -280,7 +280,7 @@ class EloquentTest extends TestCase
         $this->assertSame($builder->toSql(), $unserialize->toSql());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_serialize_a_related_eloquent_builder()
     {
         $builder = (new User())->forceFill([
