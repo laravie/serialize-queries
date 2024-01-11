@@ -23,7 +23,7 @@ class Query
             'bindings' => $builder->bindings,
             'distinct' => $builder->distinct,
             'from' => $builder->from,
-            'joins' => collect($builder->joins)->map(fn ($join) => JoinClause::serialize($join))->all(),
+            'joins' => collect($builder->joins)->map(static fn ($join) => JoinClause::serialize($join))->all(),
             'wheres' => collect($builder->wheres)->map(static function ($where) {
                 if (isset($where['query'])) {
                     $where['query'] = static::serialize($where['query']);

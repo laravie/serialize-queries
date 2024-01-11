@@ -36,7 +36,7 @@ class Eloquent
                 'class' => \get_class($model),
                 'connection' => $model->getConnectionName(),
                 'eager' => collect($builder->getEagerLoads())
-                    ->map(fn ($callback) => \serialize(new SerializableClosure($callback)))
+                    ->map(static fn ($callback) => \serialize(new SerializableClosure($callback)))
                     ->all(),
                 'removedScopes' => $builder->removedScopes(),
             ],
@@ -67,7 +67,7 @@ class Eloquent
             )->setModel($model)
         )->setEagerLoads(
             collect($payload['model']['eager'])
-                ->map(fn ($callback) => \unserialize($callback)->getClosure())
+                ->map(static fn ($callback) => \unserialize($callback)->getClosure())
                 ->all()
         )->withoutGlobalScopes($payload['model']['removedScopes']);
     }
