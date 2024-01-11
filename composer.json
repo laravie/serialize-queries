@@ -38,11 +38,6 @@
     "config": {
         "sort-packages": true
     },
-    "extra": {
-        "branch-alias": {
-            "dev-next": "3.x-dev"
-        }
-    },
     "scripts": {
         "ci": [
             "@composer audit",
