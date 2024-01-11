@@ -64,9 +64,7 @@ class EloquentTest extends TestCase
     #[Test]
     public function it_can_serialize_a_basic_eloquent_with_eager_relations()
     {
-        $builder = User::with(['posts' => function ($query) {
-            return $query->where('id', '>', 10);
-        }]);
+        $builder = User::with(['posts' => static fn ($query) => $query->where('id', '>', 10)]);
 
         $serialized = serialize($builder);
 
@@ -178,9 +176,7 @@ class EloquentTest extends TestCase
     #[Test]
     public function it_can_serialize_a_basic_eloquent_builder_with_join()
     {
-        $builder = Post::whereHas('user', function ($query) {
-            return $query->where('users.email', '=', 'crynobone@gmail.com');
-        });
+        $builder = Post::whereHas('user', static fn ($query) => $query->where('users.email', '=', 'crynobone@gmail.com'));
 
         $serialized = serialize($builder);
 
@@ -225,9 +221,7 @@ class EloquentTest extends TestCase
     #[Test]
     public function it_can_serialize_a_basic_eloquent_builder_with_belongs_to_many_join()
     {
-        $builder = User::whereHas('roles', function ($query) {
-            return $query->whereIn('roles.id', [1]);
-        });
+        $builder = User::whereHas('roles', static fn ($query) => $query->whereIn('roles.id', [1]));
 
         $serialized = serialize($builder);
 
