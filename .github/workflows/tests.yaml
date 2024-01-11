@@ -40,22 +40,11 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip, pcntl, sqlite3, pdo_sqlite, pdo_mysql, bcmath, intl, gd, exif, iconv, imagick, fileinfo
           coverage: none
 
-      - name: Install Laravel ${{ matrix.laravel }}
-        run: composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
-
-      - name: Add PHP 8.1 Requirements for ubuntu-latest
-        run: composer require "ramsey/collection:^1.2" --no-interaction --no-update
-        if: matrix.php >= 8.1 && matrix.os != 'windows-latest'
-
-      - name: Add PHP 8.1 Requirements for windows-latest
-        run: composer require "ramsey/collection:~1.2" --no-interaction --no-update
-        if: matrix.php >= 8.1 && matrix.os == 'windows-latest'
-
       - name: Install dependencies
         uses: "ramsey/composer-install@v2"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "--prefer-dist --no-cache"
+          composer-options: "--prefer-dist --no-cache --with=laravel/framework:${{ matrix.laravel }}"
 
       - name: Installed dependencies
         run: composer show -D
@@ -95,14 +84,11 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip, pcntl, sqlite3, pdo_sqlite, pdo_mysql, bcmath, intl, gd, exif, iconv, imagick, fileinfo
           coverage: none
 
-      - name: Install Laravel ${{ matrix.laravel }}
-        run: composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
-
       - name: Install dependencies
         uses: "ramsey/composer-install@v2"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "--prefer-dist --no-cache"
+          composer-options: "--prefer-dist --no-cache --with=laravel/framework:${{ matrix.laravel }}"
 
       - name: Installed dependencies
         run: composer show -D
@@ -141,14 +127,11 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip, pcntl, sqlite3, pdo_sqlite, pdo_mysql, bcmath, intl, gd, exif, iconv, imagick, fileinfo
           coverage: none
 
-      - name: Install Laravel ${{ matrix.laravel }}
-        run: composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
-
       - name: Install dependencies
         uses: "ramsey/composer-install@v2"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "--prefer-dist --no-cache"
+          composer-options: "--prefer-dist --no-cache --with=laravel/framework:${{ matrix.laravel }}"
 
       - name: Installed dependencies
         run: composer show -D
