@@ -8,7 +8,7 @@ Released: 2024-03-07
 
 ### Added
 
-* Add supports for Laravel Framework 11.
+* Add support for Laravel Framework 11.
 
 ### Changes
 
