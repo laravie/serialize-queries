@@ -1,7 +1,7 @@
 Serializable Laravel Query Builder
 ==============
 
-[![tests](https://github.com/laravie/serialize-queries/workflows/tests/badge.svg?branch=master)](https://github.com/laravie/serialize-queries/actions?query=workflow%3Atests+branch%3Amaster)
+[![tests](https://github.com/laravie/serialize-queries/workflows/tests/badge.svg?branch=3.x)](https://github.com/laravie/serialize-queries/actions?query=workflow%3Atests+branch%3A3.x)
 [![Latest Stable Version](https://poser.pugx.org/laravie/serialize-queries/v/stable)](https://packagist.org/packages/laravie/serialize-queries)
 [![Total Downloads](https://poser.pugx.org/laravie/serialize-queries/downloads)](https://packagist.org/packages/laravie/serialize-queries)
 [![Latest Unstable Version](https://poser.pugx.org/laravie/serialize-queries/v/unstable)](https://packagist.org/packages/laravie/serialize-queries)
