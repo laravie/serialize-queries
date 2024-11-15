@@ -48,14 +48,16 @@ class Eloquent
      * Unserialize to Eloquent Query Builder.
      *
      * @param  array{model: array<string, mixed>, builder: array<string, mixed>}  $payload
+     * @return \Illuminate\Database\Eloquent\Builder<\Illuminate\Database\Eloquent\Model>
      *
      * @phpstan-param  TPayload  $payload
      */
     public static function unserialize(array $payload): EloquentQueryBuilder
     {
-        $model = tap(new $payload['model']['class'](), static function ($model) use ($payload) {
-            $model->setConnection($payload['model']['connection']);
-        });
+        /** @var \Illuminate\Database\Eloquent\Model $model */
+        $model = new $payload['model']['class'];
+
+        $model->setConnection($payload['model']['connection']);
 
         // Register model global scopes to eloquent query builder, and
         // use $payload['model']['removedScopes'] to exclude

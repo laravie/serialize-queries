@@ -16,7 +16,7 @@ class HelpersTest extends TestCase
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Unable to serialize $builder.');
 
-        serialize(new \Illuminate\Support\Fluent());
+        serialize(new \Illuminate\Support\Fluent);
     }
 
     #[Test]
@@ -25,6 +25,6 @@ class HelpersTest extends TestCase
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Unable to unserialize $payload.');
 
-        unserialize(new \Illuminate\Support\Fluent());
+        unserialize(new \Illuminate\Support\Fluent);
     }
 }

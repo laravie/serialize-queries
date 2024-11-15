@@ -8,6 +8,5 @@ parameters:
   level: 8
 
   ignoreErrors:
-    - '#Call to an undefined method Illuminate\\Database\\ConnectionInterface::(getName|query)\(\)#'
-
-  checkMissingIterableValueType: false
+    - identifier: missingType.generics
+    - identifier: missingType.iterableValue

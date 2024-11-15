@@ -278,7 +278,7 @@ class EloquentTest extends TestCase
     #[Test]
     public function it_can_serialize_a_related_eloquent_builder()
     {
-        $builder = (new User())->forceFill([
+        $builder = (new User)->forceFill([
             'id' => 5,
         ])->posts();
 
