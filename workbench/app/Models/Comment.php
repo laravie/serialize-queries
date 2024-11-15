@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
+    /** {@inheritDoc} */
     protected $table = 'comments';
 
+    /** {@inheritDoc} */
+    #[\Override]
     public static function boot()
     {
         parent::boot();
@@ -16,6 +19,8 @@ class Comment extends Model
         static::booted();
     }
 
+    /** {@inheritDoc} */
+    #[\Override]
     public static function booted()
     {
         static::addGlobalScope('id', function (Builder $builder) {
