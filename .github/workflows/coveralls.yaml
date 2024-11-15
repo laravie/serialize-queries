@@ -6,22 +6,18 @@ on:
 
 jobs:
   tests:
-    runs-on: ${{ matrix.os }}
+    runs-on: "ubuntu-latest"
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        os:
-          - "ubuntu-latest"
         php:
-          - 8.2
+          - 8.3
         laravel:
-          - "10.x"
-        dependencies:
-          - "highest"
+          - "11.x"
         experimental:
           - false
 
-    name: Laravel ${{ matrix.laravel }} on PHP${{ matrix.php }}-${{ matrix.os }} (${{ matrix.dependencies }})
+    name: Laravel:${{ matrix.laravel }} / PHP:${{ matrix.php }} Code Coverage
 
     steps:
       - name: Checkout code
@@ -41,7 +37,7 @@ jobs:
       - name: Install dependencies
         uses: "ramsey/composer-install@v3"
         with:
-          dependency-versions: "${{ matrix.dependencies }}"
+          dependency-versions: "highest"
           composer-options: "--prefer-dist --no-cache --with=laravel/framework:${{ matrix.laravel }}"
 
       - name: Execute tests

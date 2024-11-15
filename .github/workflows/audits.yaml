@@ -6,22 +6,25 @@ on:
   workflow_dispatch:
 
 jobs:
-  audit-dependencies-on-laravel-11:
-    runs-on: ${{ matrix.os }}
+  audit:
+    runs-on: "ubuntu-latest"
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        os:
-          - "ubuntu-latest"
         php:
+          - 8.1
           - 8.2
           - 8.3
         laravel:
+          - "10.x"
           - "11.x"
         experimental:
           - false
+        exclude:
+          - php: 8.1
+            laravel: "11.x"
 
-    name: PHP${{ matrix.php }}-${{ matrix.os }} with Laravel ${{ matrix.laravel }}
+    name: Laravel:${{ matrix.laravel }} / PHP:${{ matrix.php }} Code Audit
 
     steps:
       - name: Checkout code
@@ -43,47 +46,6 @@ jobs:
         with:
           dependency-versions: "highest"
           composer-options: "--prefer-dist --prefer-stable --no-cache"
-
-      - name: Installed dependencies
-        run: composer show -D
-
-      - name: Audit dependencies
-        run: composer audit
-
-  audit-dependencies-on-laravel-10:
-    runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.experimental }}
-    strategy:
-      matrix:
-        os:
-          - "ubuntu-latest"
-        php:
-          - 8.1
-          - 8.2
-          - 8.3
-        laravel:
-          - "10.x"
-        experimental:
-          - false
-
-    name: PHP${{ matrix.php }}-${{ matrix.os }} with Laravel ${{ matrix.laravel }}
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, sqlite3, pdo_sqlite, pdo_mysql, bcmath, intl, gd, exif, iconv, imagick, fileinfo
-          coverage: none
-
-      - name: Install dependencies
-        uses: "ramsey/composer-install@v3"
-        with:
-          dependency-versions: "highest"
-          composer-options: "--prefer-dist --prefer-stable --no-cache --with=laravel/framework:${{ matrix.laravel }}"
 
       - name: Installed dependencies
         run: composer show -D
