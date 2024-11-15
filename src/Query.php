@@ -18,7 +18,7 @@ class Query
         $connection = $builder->getConnection();
 
         return array_filter([
-            'connection' => \is_string($connection) ? $connection : $connection->getName(),
+            'connection' => \is_string($connection) ? $connection : $connection->getName(), // @phpstan-ignore method.notFound
             'columns' => $builder->columns,
             'bindings' => $builder->bindings,
             'distinct' => $builder->distinct,

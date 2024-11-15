@@ -44,4 +44,4 @@ jobs:
         run: vendor/bin/pint --test
 
       - name: Execute Static Code Analysis
-        run: vendor/bin/phpstan analyse
+        run: vendor/bin/phpstan analyse --verbose
