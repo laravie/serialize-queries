@@ -25,14 +25,14 @@
     },
     "require": {
         "php": "^8.1",
-        "illuminate/database": "^10.40 || ^11.0",
-        "illuminate/queue": "^10.40 || ^11.0",
+        "illuminate/database": "^10.48.23 || ^11.31",
+        "illuminate/queue": "^10.48.23 || ^11.31",
         "laravel/serializable-closure": "^1.3 || ^2.0"
     },
     "require-dev": {
-        "laravel/pint": "^1.6",
-        "orchestra/testbench": "^8.19 || ^9.0",
-        "phpstan/phpstan": "^1.10.5",
+        "laravel/pint": "^1.17",
+        "orchestra/testbench": "^8.28 || ^9.6",
+        "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^10.1 || ^11.0"
     },
     "config": {
@@ -51,7 +51,7 @@
         "build": "@php vendor/bin/testbench workbench:build --ansi",
         "lint": [
             "@php vendor/bin/pint",
-            "@php vendor/bin/phpstan analyse"
+            "@php vendor/bin/phpstan analyse --verbose"
         ]
     },
     "prefer-stable": true,
