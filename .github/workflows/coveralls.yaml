@@ -13,7 +13,7 @@ jobs:
         php:
           - 8.3
         laravel:
-          - "11.x"
+          - "12.x"
         experimental:
           - false
 
