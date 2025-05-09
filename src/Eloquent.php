@@ -4,6 +4,7 @@ namespace Laravie\SerializesQuery;
 
 use Illuminate\Database\Eloquent\Builder as EloquentQueryBuilder;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Collection;
 use Laravel\SerializableClosure\SerializableClosure;
 
 /**
@@ -35,7 +36,7 @@ class Eloquent
             'model' => [
                 'class' => \get_class($model),
                 'connection' => $model->getConnectionName(),
-                'eager' => collect($builder->getEagerLoads())
+                'eager' => (new Collection($builder->getEagerLoads()))
                     ->map(static fn ($callback) => \serialize(new SerializableClosure($callback)))
                     ->all(),
                 'removedScopes' => $builder->removedScopes(),
@@ -68,7 +69,7 @@ class Eloquent
                 Query::unserialize($payload['builder'])
             )->setModel($model)
         )->setEagerLoads(
-            collect($payload['model']['eager'])
+            (new Collection($payload['model']['eager']))
                 ->map(static fn ($callback) => \unserialize($callback)->getClosure())
                 ->all()
         )->withoutGlobalScopes($payload['model']['removedScopes']);

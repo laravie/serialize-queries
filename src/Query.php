@@ -3,6 +3,7 @@
 namespace Laravie\SerializesQuery;
 
 use Illuminate\Database\Query\Builder as FluentQueryBuilder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class Query
@@ -23,8 +24,10 @@ class Query
             'bindings' => $builder->bindings,
             'distinct' => $builder->distinct,
             'from' => $builder->from,
-            'joins' => collect($builder->joins)->map(static fn ($join) => JoinClause::serialize($join))->all(),
-            'wheres' => collect($builder->wheres)->map(static function ($where) {
+            'joins' => (new Collection($builder->joins))->map(
+                static fn ($join) => JoinClause::serialize($join)
+            )->all(),
+            'wheres' => (new Collection($builder->wheres))->map(static function ($where) {
                 if (isset($where['query'])) {
                     $where['query'] = static::serialize($where['query']);
                 }
@@ -36,7 +39,7 @@ class Query
             'orders' => $builder->orders,
             'limit' => $builder->limit,
             'offset' => $builder->offset,
-            'unions' => collect($builder->unions)->map(static function ($union) {
+            'unions' => (new Collection($builder->unions))->map(static function ($union) {
                 if (isset($union['query'])) {
                     $union['query'] = static::serialize($union['query']);
                 }
@@ -68,7 +71,7 @@ class Query
      */
     public static function unserializeFor(FluentQueryBuilder $builder, array $payload): FluentQueryBuilder
     {
-        collect($payload)->transform(static function ($value, $type) use ($builder) {
+        (new Collection($payload))->transform(static function ($value, $type) use ($builder) {
             if ($type === 'wheres') {
                 foreach ($value as $index => $where) {
                     if (isset($where['query']) && \is_array($where['query'])) {

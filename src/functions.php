@@ -12,6 +12,8 @@ use InvalidArgumentException;
  *
  * @param  \Illuminate\Contracts\Database\Query\Builder|mixed  $builder
  * @return array<string, mixed>
+ *
+ * @throws \InvalidArgumentException
  */
 function serialize($builder): array
 {
@@ -31,6 +33,8 @@ function serialize($builder): array
  *
  * @param  string|array<string, mixed>  $serialized
  * @return \Illuminate\Contracts\Database\Query\Builder
+ *
+ * @throws \InvalidArgumentException
  */
 function unserialize($serialized)
 {
