@@ -10,33 +10,27 @@ on:
 jobs:
   tests:
     runs-on: ${{ matrix.os }}
+
     continue-on-error: ${{ matrix.experimental }}
+
     strategy:
       matrix:
-        os:
-          - "ubuntu-latest"
-          - "windows-latest"
-        php:
-          - 8.1
-          - 8.2
-          - 8.3
-          - 8.4
-        laravel:
-          - "12.x"
-          - "11.x"
-          - "10.x"
-        dependencies:
-          - "highest"
-          - "lowest"
-        experimental:
-          - false
+        os: [ubuntu-latest, windows-latest]
+        php: [8.1, 8.2, 8.3, 8.4]
+        laravel: [10.x, 11.x, 12.x, 13.x]
+        dependencies: [highest, lowest]
+        experimental: [false]
         exclude:
           - php: 8.1
-            laravel: "12.x"
+            laravel: 12.x
           - php: 8.1
-            laravel: "11.x"
+            laravel: 11.x
           - php: 8.4
-            laravel: "10.x"
+            laravel: 10.x
+          - laravel: 13.x
+            php: 8.1
+          - laravel: 13.x
+            php: 8.2
 
     name: Laravel:${{ matrix.laravel }} / PHP:${{ matrix.php }} / OS:${{ matrix.os }} ${{ matrix.dependencies == 'highest' && '⬆️' || '⬇️' }}
 
@@ -52,10 +46,10 @@ jobs:
           coverage: none
 
       - name: Install dependencies
-        uses: "ramsey/composer-install@v3"
+        uses: ramsey/composer-install@v3
         with:
-          dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "--prefer-dist --no-cache --with=laravel/framework:${{ matrix.laravel }}"
+          dependency-versions: ${{ matrix.dependencies }}
+          composer-options: --prefer-dist --no-cache --with=laravel/framework:${{ matrix.laravel }}
 
       - name: Installed dependencies
         run: composer show -D
