@@ -21,7 +21,9 @@ jobs:
           - 8.2
           - 8.3
           - 8.4
+          - 8.5
         laravel:
+          - "13.x"
           - "12.x"
           - "11.x"
           - "10.x"
@@ -31,10 +33,18 @@ jobs:
         experimental:
           - false
         exclude:
+          - php: 8.2
+            laravel: "13.x"
+          - php: 8.1
+            laravel: "13.x"
           - php: 8.1
             laravel: "12.x"
+          - php: 8.5
+            laravel: "11.x"
           - php: 8.1
             laravel: "11.x"
+          - php: 8.5
+            laravel: "10.x"
           - php: 8.4
             laravel: "10.x"
 
@@ -42,7 +52,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -52,7 +62,7 @@ jobs:
           coverage: none
 
       - name: Install dependencies
-        uses: "ramsey/composer-install@v3"
+        uses: ramsey/composer-install@v4
         with:
           dependency-versions: "${{ matrix.dependencies }}"
           composer-options: "--prefer-dist --no-cache --with=laravel/framework:${{ matrix.laravel }}"
