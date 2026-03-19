@@ -1,6 +1,7 @@
 {
     "preset": "laravel",
     "rules": {
+        "fully_qualified_strict_types": false,
         "no_superfluous_phpdoc_tags": true,
         "php_unit_method_casing": false
     }

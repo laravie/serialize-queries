@@ -49,9 +49,10 @@ class Eloquent
      * Unserialize to Eloquent Query Builder.
      *
      * @param  array{model: array<string, mixed>, builder: array<string, mixed>}  $payload
-     * @return \Illuminate\Database\Eloquent\Builder<\Illuminate\Database\Eloquent\Model>
      *
      * @phpstan-param  TPayload  $payload
+     *
+     * @return \Illuminate\Database\Eloquent\Builder<\Illuminate\Database\Eloquent\Model>
      */
     public static function unserialize(array $payload): EloquentQueryBuilder
     {
