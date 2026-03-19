@@ -2,6 +2,14 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `laravie/serialize-queries`.
 
+## 3.3.0
+
+Released: 2025-02-17
+
+### Added
+
+* Add support for Laravel Framework 13.
+
 ## 3.2.0
 
 Released: 2025-02-17
