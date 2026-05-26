@@ -8,7 +8,7 @@ on:
 jobs:
   audit:
     runs-on: "ubuntu-latest"
-    continue-on-error: false
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
         php:
@@ -22,6 +22,8 @@ jobs:
           - "12.x"
           - "11.x"
           - "10.x"
+        experimental:
+          - false
         exclude:
           - php: 8.2
             laravel: "13.x"
